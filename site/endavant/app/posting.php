@@ -27,4 +27,7 @@ class posting extends Model
     {
         return $this->hasMany(offer::class);
     }
+    public function favorites(){
+        return $this->hasMany(favorite::class);
+    }
 }

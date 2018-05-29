@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\company;
+use App\student;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +45,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -58,15 +60,43 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = new User();
+        $user->name = $data['name'];
+        $user->familyname = $data['familyname'];
+        $user->phone_number = $data['phone_number'];
+        $user->date_of_birth = $data['date_of_birth'];
+        $user->national_register = $data['national_register'];
+        $user->email = $data['email'];
+        $user->adress = $data['adress'];
+        $user->city = $data['city'];
+        $user->zip_code = $data['zip_code'];
+        $user->password = Hash::make($data['password']);
+        $user->save();
+        if ($data['company']['name'] === null) {
+            $stud = new student();
+            $stud->description = null;
+            $stud->user_id = $user->id;
+            $stud->save();
+        } else {
+            $bus = new company();
+            $bus->name=$data['company']['name'];
+            $bus->vat_number=$data['company']['vat_number'];
+            $bus->adress=$data['company']['adress'];
+            $bus->phone_number=$data['company']['phone_number'];
+            $bus->description=null;
+            $bus->city=$data['company']['city'];
+            $bus->zip_code=$data['company']['zip_code'];
+            $bus->save();
+
+
+        }
+
+
+        return $user;
     }
 }

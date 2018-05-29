@@ -16,11 +16,11 @@ class CreatePostingsTable extends Migration
         Schema::create('postings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->json('descritpion');
-            $table->json('reason');
+            $table->text('description');
+            $table->text('reason');
             $table->integer('company_id')->unsigned();
             $table->integer('postingtype_id')->unsigned();
-            $table->integer('student_id')->unsigned()->nullable;
+            $table->integer('student_id')->nullable()->unsigned()->default(null);
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('postingtype_id')->references('id')->on('postingtypes')->onDelete('cascade');

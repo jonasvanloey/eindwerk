@@ -18,7 +18,7 @@ class CreatePortfoliosTable extends Migration
             $table->integer('student_id')->unsigned();
             $table->string('title');
             $table->string('link');
-            $table->json('description');
+            $table->text('description');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->timestamps();
         });

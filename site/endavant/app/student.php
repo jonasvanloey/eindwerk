@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class student extends Model
 {
-    protected $fillable = ['description'];
+    protected $fillable = ['description','user_id'];
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function ratings()
@@ -26,5 +26,8 @@ class student extends Model
     public function offers()
     {
         return $this->hasMany(offer::class);
+    }
+    public function favorites(){
+        return $this->hasMany(favorite::class);
     }
 }

@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <title>Endavant</title>
 </head>
 <body>
 <div class="top-bar">
-    {{--@if (Route::has('login'))--}}
     <div>
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="/home"><img src="{{asset('img/endavant_logo.svg')}}" alt="logo endavant"
@@ -21,18 +21,33 @@
             </button>
             <div class="collapse navbar-collapse " id="navbarNav">
                 <ul class="navbar-nav justify-content-end d-flex flex-fill">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="home">Home</a>
+                    <li class="nav-item {{ active_class(if_route('home')||if_route('/')) }}">
+                        <a class="nav-link" href="/home">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Jobs</a>
+                    <li class="nav-item {{ active_class(if_controller('App\Http\Controllers\PostingController')) }}">
+                        <a class="nav-link" href="/jobs">Jobs</a>
                     </li>
                     @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Favorieten</a>
+                    <li class="nav-item {{ active_class(if_route('favorite')) }}">
+                        <a class="nav-link" href="/favorite">Favorieten</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Berichten</a>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/messages">Berichten</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-nav">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\StudentController')) }}" href="{{route('profile.show',Auth::user()->id)}}">Profiel</a>
+                            <a class="dropdown-item nav-link" href="invite">Vrienden uitnodigen</a>
+                            <a href="{{ url('/logout') }}" class="dropdown-item nav-link"
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">Uitloggen
+                            </a>
+                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
                     </li>
                     @else
                         <li class="nav-item">
@@ -51,7 +66,6 @@
 
 </div>
 </div>
-{{--@endif--}}
 <div class="">
     @yield('content')
 </div>
@@ -61,6 +75,9 @@
         <p><a href="">Algemene voorwaarden</a> | <a href="">Privacy verklaring</a></p>
     </div>
 </footer>
+
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/favorite.js') }}"></script>
+
 </body>
 </html>

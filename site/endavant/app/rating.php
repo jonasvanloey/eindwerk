@@ -17,4 +17,7 @@ class rating extends Model
     {
         return $this->belongsTo(student::class);
     }
+    public function favorites(){
+        return $this->hasMany(favorite::class);
+    }
 }

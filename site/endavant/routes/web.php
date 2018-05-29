@@ -13,6 +13,12 @@
 
 Route::resource('/', 'HomeController');
 Route::resource('', 'HomeController');
+Route::resource('profile', 'StudentController');
+Route::resource('company', 'CompanyController');
+Route::resource('jobs', 'PostingController');
+Route::resource('favorite', 'FavoriteController');
+
+Route::post('/favoritejob', 'FavoriteController@addToFave')->name('favoritejob');
 
 Auth::routes();
 

@@ -24,14 +24,22 @@ class CRUDController extends BaseController
 
     public function index()
     {
-        if ($this->pagination) {
-            $data['items'] = $this->repository->getAllPaginated();
-
-            return view($this->viewFolder . '.index', $data);
-        }
-        $data['items'] = $this->repository->getAll();
+        $data['items'] = $this->repository->all();
 
         return view($this->viewFolder . '.index', $data);
+    }
+    public function show($id){
+        $data['item'] = $this->repository->find($id);
+
+        return view($this->viewFolder . '.detail', $data);
+    }
+    public function destroy($id)
+    {
+        $this->repository->delete($id);
+
+        Session::flash('success', 'Item was deleted successfully!');
+
+        return $this->redirectIndex ? redirect()->route($this->viewFolder . '.index') : redirect()->route($this->viewFolder . '.index');
     }
 
     public function create()
@@ -40,6 +48,10 @@ class CRUDController extends BaseController
 
         return view($this->viewFolder . '.create', $data);
     }
+
+
+    //TODO checken of de functies hier onder wel gebruikt worden.
+
 
     public function store(Request $request)
     {
@@ -69,14 +81,7 @@ class CRUDController extends BaseController
             $item->id) : redirect()->route('admin.' . $this->routeName . '.edit', $item->id);
     }
 
-    public function destroy($id)
-    {
-        $this->repository->delete($id);
 
-        Session::flash('success', 'Item was deleted successfully!');
-
-        return $this->redirectIndex ? redirect()->route('admin.' . $this->routeName . '.index') : redirect()->route('admin.' . $this->routeName . '.index');
-    }
 
     public function sort(Request $request)
     {

@@ -9,9 +9,12 @@ class company extends Model
     protected $fillable = ['name', 'vat_number', 'adress', 'phone_number', 'description'];
 
     //
+    public function favorites(){
+        return $this->hasMany(favorite::class);
+    }
     public function users()
     {
-        return $this->belongsToMany(User::class, 'company_users', 'company_id', 'user_id');
+        return $this->belongsToMany(User::class, 'company_user');
     }
 
     public function postings()

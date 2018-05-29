@@ -19,7 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('vat_number');
             $table->string('adress');
             $table->string('phone_number');
-            $table->json('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
