@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class posting extends Model
 {
-    protected $fillable = ['title', 'description', 'reason'];
+    protected $fillable = ['title', 'description', 'reason','company_id','postingtype_id'];
 
     public function company()
     {

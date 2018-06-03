@@ -14,11 +14,16 @@
                 <div class="col-12 col-md-9">
                     <div class="row no-gutters">
                         <h2 class="accent">Rede voor het project</h2>
-                        {!! $item->reason  !!}
+                        <div class="col-12 col-md-12 no-gutters">
+                            {!! $item->reason  !!}
+                        </div>
+
                     </div>
                     <div class="row no-gutters">
                         <h2 class="accent">Beschrijving van het project</h2>
-                        {!! $item->description  !!}
+                        <div class="col-12 col-md-12 no-gutters">
+                            {!! $item->description  !!}
+                        </div>
                     </div>
                     <div class="row no-gutters">
                         <h2 class="accent">Informatie over de onderneming</h2>

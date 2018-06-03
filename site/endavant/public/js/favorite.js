@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ 	return __webpack_require__(__webpack_require__.s = 59);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1841,14 +1841,29 @@ module.exports = function spread(callback) {
 /* 41 */,
 /* 42 */,
 /* 43 */,
-/* 44 */
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(45);
+module.exports = __webpack_require__(60);
 
 
 /***/ }),
-/* 45 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1877,7 +1892,6 @@ if (token) {
 
 $(window).on('load', function () {
 
-    console.log('loaded');
     $('.addToFav').on('click', function () {
         if ($(this).hasClass('unclicked')) {
             $(this).removeClass('unclicked');
@@ -1888,6 +1902,14 @@ $(window).on('load', function () {
         var id = $(this).attr('id');
         formData.append('job_id', id);
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('favoritejob', { job_id: id }).catch(function (error) {}).then(function (res) {});
+    });
+
+    $('.registerbusinessbtn').on('click', function () {
+        if ($(this).attr('aria-expanded') === 'false') {
+            $(this).text('Ik ben geen werkgever');
+        } else {
+            $(this).text('Ik ben een werkgever');
+        }
     });
 });
 

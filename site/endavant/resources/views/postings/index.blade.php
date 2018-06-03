@@ -5,9 +5,11 @@
             <div class="col-12 col-md-10 ">
                 <h1>jobs</h1> <a href="" class="btn big">Filter</a>
             </div>
+            @if(Auth::check()&& Auth::user()->hasRole('company'))
             <div class="col-12 col-md-2 text-right">
-                <a href="{{route('jobs.create')}}" class="btn big">Plaats een job</a>
+                <a href="{{url('jobs/create')}}" class="btn big">Plaats een job</a>
             </div>
+            @endif
         </div>
         <div class="row no-gutters">
             <div class="col-12 col-md-7">

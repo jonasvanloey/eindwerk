@@ -13,9 +13,17 @@
 
 Route::resource('/', 'HomeController');
 Route::resource('', 'HomeController');
+
+Route::get('profile/{id}/edit', 'StudentController@edit')->middleware('auth');
 Route::resource('profile', 'StudentController');
+
+
+
 Route::resource('company', 'CompanyController');
 Route::resource('jobs', 'PostingController');
+
+Route::get('jobs/create', 'PostingController@create')->middleware('auth','role:company');
+
 Route::resource('favorite', 'FavoriteController');
 
 Route::post('/favoritejob', 'FavoriteController@addToFave')->name('favoritejob');
@@ -23,3 +31,7 @@ Route::post('/favoritejob', 'FavoriteController@addToFave')->name('favoritejob')
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('inbox','MessageController@index');
+Route::get('messages', 'MessageController@fetchMessages');
+Route::post('messages', 'MessageController@sendMessage');

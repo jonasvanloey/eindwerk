@@ -21,7 +21,6 @@ if (token) {
 
 $(window).on('load', function () {
 
-    console.log('loaded');
     $('.addToFav').on('click', function () {
         if($(this).hasClass('unclicked')){
             $(this).removeClass('unclicked');
@@ -35,6 +34,15 @@ $(window).on('load', function () {
         axios.post('favoritejob', {job_id:id}).catch(error => {
         }).then(res => {
         });
+    });
+
+    $('.registerbusinessbtn').on('click',function(){
+        if ($(this).attr('aria-expanded') === 'false') {
+            $(this).text('Ik ben geen werkgever')
+        }
+        else{
+            $(this).text('Ik ben een werkgever')
+        }
     });
 });
 

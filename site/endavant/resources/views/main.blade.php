@@ -35,11 +35,19 @@
                         <a class="nav-link" href="/messages">Berichten</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-nav">
                         </a>
+
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\StudentController')) }}" href="{{route('profile.show',Auth::user()->id)}}">Profiel</a>
+                            @if(Auth::user()->hasRole('student'))
+                                <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\StudentController')) }}"
+                                   href="{{route('profile.show',Auth::user()->id)}}">Profiel</a>
+                            @elseif(Auth::user()->hasRole('company'))
+                                <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\CompanyController')) }}"
+                                   href="{{route('company.show',Auth::user()->companies->first()->id)}}">Bedrijf</a>
+                            @endif
                             <a class="dropdown-item nav-link" href="invite">Vrienden uitnodigen</a>
                             <a href="{{ url('/logout') }}" class="dropdown-item nav-link"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">Uitloggen

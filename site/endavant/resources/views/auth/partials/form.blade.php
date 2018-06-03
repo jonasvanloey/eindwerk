@@ -42,21 +42,17 @@
                 @include('partials.text',['label'=>'Postcode','name'=>'zip_code'])
             </div>
         </div>
-
-
-
-
     </div>
 </div>
-<div class="row no-gutters company">
+<div id="collapseBusiness" class="row no-gutters company collapse multi-collapse">
     <hr>
-    @include('auth.partials.company');
+    @include('auth.partials.company')
 </div>
 <div class="row  ">
     <div class="col-12 col-md-4 offset-md-3">
         {!! Form::submit('Registreer', array('class' => 'btn big')) !!}
     </div>
     <div class="col-12 col-md-4 ">
-        <a href="" class="btn btn-grey big">Ik ben een werkgever</a>
+        <a class="btn btn-grey big registerbusinessbtn" data-toggle="collapse" href="#collapseBusiness" role="button" aria-expanded="false" aria-controls="collapseBusiness">Ik ben een werkgever</a>
     </div>
 </div>

@@ -78,20 +78,23 @@ class RegisterController extends Controller
         $user->password = Hash::make($data['password']);
         $user->save();
         if ($data['company']['name'] === null) {
+            $user->roles()->attach(Role::where('name', 'student')->first());
             $stud = new student();
             $stud->description = null;
             $stud->user_id = $user->id;
             $stud->save();
         } else {
+            $user->roles()->attach(Role::where('name', 'company')->first());
             $bus = new company();
             $bus->name=$data['company']['name'];
             $bus->vat_number=$data['company']['vat_number'];
             $bus->adress=$data['company']['adress'];
             $bus->phone_number=$data['company']['phone_number'];
-            $bus->description=null;
+            $bus->description=$data['description'];
             $bus->city=$data['company']['city'];
             $bus->zip_code=$data['company']['zip_code'];
             $bus->save();
+            $bus->users()->attach($user->id);
 
 
         }

@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 
+use App\company;
 use App\favorite;
 use App\posting;
 use App\student;
@@ -23,6 +24,12 @@ class PostingRepository extends AbstractRepository
             return null;
         }
 
+    }
+    public function getCompanyId(){
+        $company_id=company::whereHas('users',function($q){
+            $q->where('user_id',Auth::user()->id);
+        })->first();
+        return $company_id->id;
     }
     //TODO delete favorites if posting is deleted
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\company;
+use App\Role;
 use App\student;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,9 @@ class UserSeeder extends Seeder
         DB::table('companies')->truncate();
         DB::table('users')->truncate();
 
+        $student = Role::where('name', 'student')->first();
+        $company = Role::where('name', 'company')->first();
+
         $user = new User();
         $user->name = 'jonas';
         $user->familyname = 'van loey';
@@ -36,6 +40,7 @@ class UserSeeder extends Seeder
         $user->zip_code = '2650';
         $user->password = Hash::make('2650Edegem');
         $user->save();
+        $user->roles()->attach($student);
 
         $stud = new student();
         $stud->description = null;
@@ -54,6 +59,7 @@ class UserSeeder extends Seeder
         $user2->zip_code = '2650';
         $user2->password = Hash::make('2650Edegem');
         $user2->save();
+        $user2->roles()->attach($company);
 
         $bus = new company();
         $bus->name = 'mellow webdesign';

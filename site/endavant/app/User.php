@@ -36,4 +36,22 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(company::class, 'company_user');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($role)
+    {
+        return null !== $this->roles()->where('name', $role)->first();
+    }
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+    public function chatgroups()
+    {
+        return $this->belongsToMany(Chatgroup::class, 'chatgroup_users');
+    }
 }

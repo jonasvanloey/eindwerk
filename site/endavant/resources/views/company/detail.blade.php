@@ -18,16 +18,24 @@
                 <div class="col-md-12">
                     <p>{{$item->zip_code}} {{$item->city}}</p>
                 </div>
+                <div class="col-md-12">
+                    @if(Auth::check()&& $item->id===Auth::user()->companies->first()->id)
+                        <a href="{{route('company.edit',$item->id)}}" class="btn-grey btn"><span
+                                    class="fa fa-edit"></span>bedrijf
+                            aanpassen</a>
+                    @endif
+                </div>
                 <hr>
+                <div class="col-md-12">
+                    <h3 class="accent">Werknemers</h3>
+                </div>
                 @foreach($item->users as $user)
-                    <div class="col-md-12">
-                        <h3 class="accent">Werknemers</h3>
-                    </div>
+
                     <div class="col-md-12">
                         <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
                     </div>
                     <div class="col-md-12">
-                        <h2 class="name-title"><a href="#"><b>{{$user->name}} {{$user->familyname}}</b></a></h2>
+                        <h3 class="name-title"><b>{{$user->name}} {{$user->familyname}}</b></h3>
                     </div>
                     <div class="col-md-12">
                         <p>{{$user->phone_number}}</p>
@@ -37,7 +45,9 @@
                     </div>
                 @endforeach
                 <div class="col-md-12 ">
-                    <a href="" class="btn col-md-12">Toevoegen aan favorieten</a>
+                    @if(Auth::check()&& !$item->id===Auth::user()->companies->first()->id)
+                        <a href="" class="btn col-md-12">Toevoegen aan favorieten</a>
+                    @endif
                 </div>
             </div>
             <div class="col-12 col-md-9 profile-info">
@@ -80,6 +90,6 @@
                 </div>
 
             </div>
-            </div>
         </div>
+    </div>
 @endsection

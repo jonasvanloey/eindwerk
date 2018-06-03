@@ -21,8 +21,13 @@
             </div>
             <div class="col-12 col-md-8">
                 @include('partials.text',['label'=>'Gemeente','name'=>'company[city]'])
-            </div><div class="col-12 col-md-4">
+            </div>
+            <div class="col-12 col-md-4">
                 @include('partials.text',['label'=>'Postcode','name'=>'company[zip_code]'])
+            </div>
+            <div class="col-12 col-md-12">
+                <label for="description">beschrijving</label>
+                <div id="description"></div>
             </div>
         </div>
     </div>

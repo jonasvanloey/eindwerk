@@ -37,49 +37,41 @@ class CRUDController extends BaseController
     {
         $this->repository->delete($id);
 
-        Session::flash('success', 'Item was deleted successfully!');
-
-        return $this->redirectIndex ? redirect()->route($this->viewFolder . '.index') : redirect()->route($this->viewFolder . '.index');
+        return redirect()->route($this->viewFolder . '.index');
     }
 
     public function create()
     {
-        $data = $this->repository->getFormData();
 
-        return view($this->viewFolder . '.create', $data);
+        return view($this->viewFolder . '.create');
     }
-
-
-    //TODO checken of de functies hier onder wel gebruikt worden.
-
-
     public function store(Request $request)
     {
-        $this->validate($request, $this->getRules());
-        $item = $this->repository->save($request->all());
-        Session::flash('success', 'Item was created successfully!');
+        $item = $this->repository->create($request->all());
 
-        return $this->redirectIndex ? redirect()->route('admin.' . $this->routeName . '.index',
-            $item->id) : redirect()->route('admin.' . $this->routeName . '.edit', $item->id);
+        return redirect()->route($this->NameOfRoute  . '.index', $item->id);
     }
-
     public function edit($id)
     {
-        $data = $this->repository->getFormData($id);
-        $data['item'] = $this->repository->getById($id);
+        $data['item'] = $this->repository->find($id);
 
         return view($this->viewFolder . '.edit', $data);
     }
 
+
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->getRules());
-        $item = $this->repository->update($id, $request->all());
-        Session::flash('success', 'Item was updated successfully!');
 
-        return $this->redirectIndex ? redirect()->route('admin.' . $this->routeName . '.index',
-            $item->id) : redirect()->route('admin.' . $this->routeName . '.edit', $item->id);
+        $item = $this->repository->update($id, $request->all());
+
+        return redirect()->route($this->NameOfRoute . '.index', $item->id);
     }
+
+    //TODO checken of de functies hier onder wel gebruikt worden.
+
+
+
+
 
 
 
