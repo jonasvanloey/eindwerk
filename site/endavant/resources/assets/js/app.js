@@ -46,11 +46,14 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app',
     data: {
-        messages: []
+        messages: [],
+        destid:'',
+
     },
 
     created() {
-        this.fetchMessages();
+        this.destid = this.getid()
+        this.fetchMessages(this.getid());
         Echo.private('chat')
             .listen('MessageSent', (e) => {
             this.messages.push({
@@ -61,20 +64,21 @@ const app = new Vue({
     },
 
     methods: {
-        fetchMessages() {
-            axios.get('/messages').then(response => {
+        fetchMessages(tid) {
+            axios.get('/messages/'+tid).then(response => {
                 this.messages = response.data;
-        })
-            ;
+        });
         },
 
         addMessage(message) {
             this.messages.push(message);
 
-            axios.post('/messages', message).then(response => {
+            axios.post('/messages/'+this.destid, message).then(response => {
                 console.log(response.data);
-        })
-            ;
+        });
+        },
+        getid(){
+           return $('.hid').attr('id');
         }
     }
 

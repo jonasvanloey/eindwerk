@@ -12,7 +12,9 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.6",
         "pusher/pusher-php-server": "^3.0",
-        "torann/laravel-repository": "^0.4.7"
+        "spatie/geocoder": "^3.3",
+        "torann/laravel-repository": "^0.4.7",
+        "cornford/googlmapper": "2.*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

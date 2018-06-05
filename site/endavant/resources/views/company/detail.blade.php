@@ -52,7 +52,9 @@
             </div>
             <div class="col-12 col-md-9 profile-info">
                 <div class="col-12 col-md-12">
-                    kaart
+                    <div style="width: 100%; height:500px;">
+                        {!! Mapper::render() !!}
+                    </div>
                 </div>
                 <div class="col-12 col-md-12">
                     <h2>Info over {{$item->name}}</h2>

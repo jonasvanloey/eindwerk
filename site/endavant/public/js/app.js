@@ -14999,13 +14999,16 @@ Vue.component('example-component', __webpack_require__(55));
 var app = new Vue({
     el: '#app',
     data: {
-        messages: []
+        messages: [],
+        destid: ''
+
     },
 
     created: function created() {
         var _this = this;
 
-        this.fetchMessages();
+        this.destid = this.getid();
+        this.fetchMessages(this.getid());
         Echo.private('chat').listen('MessageSent', function (e) {
             _this.messages.push({
                 message: e.message.message,
@@ -15016,19 +15019,22 @@ var app = new Vue({
 
 
     methods: {
-        fetchMessages: function fetchMessages() {
+        fetchMessages: function fetchMessages(tid) {
             var _this2 = this;
 
-            axios.get('/messages').then(function (response) {
+            axios.get('/messages/' + tid).then(function (response) {
                 _this2.messages = response.data;
             });
         },
         addMessage: function addMessage(message) {
             this.messages.push(message);
 
-            axios.post('/messages', message).then(function (response) {
+            axios.post('/messages/' + this.destid, message).then(function (response) {
                 console.log(response.data);
             });
+        },
+        getid: function getid() {
+            return $('.hid').attr('id');
         }
     }
 
@@ -91371,6 +91377,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['messages']
+
 });
 
 /***/ }),
@@ -91481,10 +91488,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['user'],
+    props: ['user', 'active'],
 
     data: function data() {
         return {
@@ -91528,7 +91534,8 @@ var render = function() {
         id: "btn-input",
         type: "text",
         name: "message",
-        placeholder: "Type your message here..."
+        placeholder: "Type your message here...",
+        disabled: _vm.active
       },
       domProps: { value: _vm.newMessage },
       on: {
@@ -91555,7 +91562,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-primary btn-sm",
-          attrs: { id: "btn-chat" },
+          attrs: { id: "btn-chat", disabled: _vm.active },
           on: { click: _vm.sendMessage }
         },
         [_vm._v("\n            Send\n        ")]

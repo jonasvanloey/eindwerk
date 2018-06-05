@@ -44,6 +44,9 @@
                                     </label>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <a href="{{url('password/reset')}}">Ik ben mijn wachtwoord vergeten</a>
+                        </div>
 
                         <div class="form-group row mb-0">
                                 <button type="submit" class="btn big">

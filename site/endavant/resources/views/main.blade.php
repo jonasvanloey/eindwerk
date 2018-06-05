@@ -32,7 +32,7 @@
                         <a class="nav-link" href="/favorite">Favorieten</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/messages">Berichten</a>
+                        <a class="nav-link" href="/inbox">Berichten</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -43,7 +43,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @if(Auth::user()->hasRole('student'))
                                 <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\StudentController')) }}"
-                                   href="{{route('profile.show',Auth::user()->id)}}">Profiel</a>
+                                   href="{{route('profile.show',Auth::user()->student->id)}}">Profiel</a>
                             @elseif(Auth::user()->hasRole('company'))
                                 <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\CompanyController')) }}"
                                    href="{{route('company.show',Auth::user()->companies->first()->id)}}">Bedrijf</a>

@@ -2,12 +2,11 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="d-flex container justify-content-center">
+        <div class="align-self-center col-md-6">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
                 <div class="card-body">
+                    <h1>Reset Wachtwoord</h1>
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}

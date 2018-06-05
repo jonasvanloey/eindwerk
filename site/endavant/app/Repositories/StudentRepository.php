@@ -17,5 +17,4 @@ class StudentRepository extends AbstractRepository
 
         return $item;
     }
-
 }

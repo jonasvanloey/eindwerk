@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CRUDController;
 use App\Repositories\CompanyRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 
 class CompanyController extends CRUDController
 {
@@ -16,6 +17,13 @@ class CompanyController extends CRUDController
         $this->repository = $repository;
         $this->viewFolder = 'company';
         $this->NameOfRoute = 'company';
+    }
+    public function show($id){
+        $data['item'] = $this->repository->find($id);
+        Mapper::map($data['item']['latitude'],$data['item']['longtitude'],['zoom' => 15, 'markers' => ['animation' => 'DROP'],'mapTypeControl'=>false,'streetViewControl'=>false]);
+
+        return view($this->viewFolder . '.detail', $data);
+
     }
     public function edit($id)
     {

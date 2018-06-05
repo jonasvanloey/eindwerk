@@ -153,6 +153,8 @@ return [
         \Torann\LaravelRepository\RepositoryServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
+        Spatie\Geocoder\GeocoderServiceProvider::class,
+        Cornford\Googlmapper\MapperServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -214,6 +216,9 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Active' => HieuLe\Active\Facades\Active::class,
+        'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
+        'Mapper'=> Cornford\Googlmapper\Facades\MapperFacade::class,
+
 
     ],
 

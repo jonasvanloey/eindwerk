@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\company;
+use App\Role;
 use App\student;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Spatie\Geocoder\Facades\Geocoder;
 
 class RegisterController extends Controller
 {
@@ -65,6 +67,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $adress = $data['adress'].' '.$data['zip_code'].' '.$data['city'];
+        $afterGeo=Geocoder::getCoordinatesForAddress($adress);
         $user = new User();
         $user->name = $data['name'];
         $user->familyname = $data['familyname'];
@@ -76,6 +80,8 @@ class RegisterController extends Controller
         $user->city = $data['city'];
         $user->zip_code = $data['zip_code'];
         $user->password = Hash::make($data['password']);
+        $user->latitude = $afterGeo['lat'];
+        $user->longtitude = $afterGeo['lng'];
         $user->save();
         if ($data['company']['name'] === null) {
             $user->roles()->attach(Role::where('name', 'student')->first());
@@ -84,6 +90,8 @@ class RegisterController extends Controller
             $stud->user_id = $user->id;
             $stud->save();
         } else {
+            $adress2 = $data['company']['adress'].' '.$data['company']['zip_code'].' '.$data['company']['city'];
+            $afterGeo2=Geocoder::getCoordinatesForAddress($adress2);
             $user->roles()->attach(Role::where('name', 'company')->first());
             $bus = new company();
             $bus->name=$data['company']['name'];
@@ -93,6 +101,8 @@ class RegisterController extends Controller
             $bus->description=$data['description'];
             $bus->city=$data['company']['city'];
             $bus->zip_code=$data['company']['zip_code'];
+            $bus->latitude = $afterGeo2['lat'];
+            $bus->longtitude = $afterGeo2['lng'];
             $bus->save();
             $bus->users()->attach($user->id);
 

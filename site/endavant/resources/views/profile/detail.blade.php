@@ -22,7 +22,9 @@
                     <p>{{$item->user->zip_code}} {{$item->user->city}}</p>
                 </div>
                 <div class="col-md-12">
-                    <p>mapje hier</p>
+                    <div style="width: 100%; height:200px;">
+                        {!! Mapper::render() !!}
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-9 profile-info">

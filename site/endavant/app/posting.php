@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class posting extends Model
 {
-    protected $fillable = ['title', 'description', 'reason','company_id','postingtype_id'];
+    protected $fillable = ['title', 'description', 'reason','company_id','postingtype_id','student_id'];
 
     public function company()
     {
@@ -29,5 +29,9 @@ class posting extends Model
     }
     public function favorites(){
         return $this->hasMany(favorite::class);
+    }
+    public function chatgroups()
+    {
+        return $this->hasMany(Chatgroup::class);
     }
 }

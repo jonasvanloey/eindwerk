@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CRUDController;
 use App\Repositories\StudentRepository;
 use App\Repositories\UserRepository;
 use App\student;
+use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,12 @@ class StudentController extends CRUDController
         $this->userrepository = $userrepository;
         $this->viewFolder = 'profile';
         $this->NameOfRoute='profile';
+    }
+    public function show($id){
+        $data['item'] = $this->repository->find($id);
+        Mapper::map($data['item']['user']['latitude'],$data['item']['user']['longtitude'],['zoom' => 15, 'markers' => ['animation' => 'DROP'],'mapTypeControl'=>false,'streetViewControl'=>false]);
+
+        return view($this->viewFolder . '.detail', $data);
     }
     public function edit($id)
     {

@@ -13719,6 +13719,10 @@ footer {
   color: #FCD939 !important;
 }
 
+.apply textarea {
+  min-height: 400px;
+}
+
 .chat {
   list-style: none;
   margin: 0;
