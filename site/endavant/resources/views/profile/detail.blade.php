@@ -29,10 +29,10 @@
             </div>
             <div class="col-12 col-md-9 profile-info">
                 <div class="row ">
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                         <h2>Info over {{$item->user->name}}</h2>
                     </div>
-                    <div class="col-12 col-md-8 text-right">
+                    <div class="col-12 col-md-6 text-right">
                         @if(Auth::check()&& $item->user->id===Auth::user()->id )
                             <a href="{{route('profile.edit',$item->id)}}" class="btn-grey btn"><span
                                         class="fa fa-edit"></span>profiel aanpassen</a>
@@ -58,13 +58,14 @@
                 </div>
                 <div class="col-12 col-md-12">
                     <div class="col-12 col-md-6">
-                        @include('partials.job',['title'=>'Dit is de titel van de job.','name'=>'de naam','company'=>'bedrijf x','adress'=>'bist 9','city'=>'Wilrijk','item'=>'profile','id'=>1])
+                        {{$item->portfolios[1]->posting}}
                     </div>
                 </div>
                 <div class="col-12 col-md-12">
                     <h2>Rating</h2>
                 </div>
-                <div class="col-12 col-md-12">
+                <div id="app" class="col-12 col-md-12">
+                    <star-rating :rating="{{$avg}}" :read-only="true" :increment="0.01"></star-rating>
                     <p>{{count($item->ratings)}} reviews</p>
                 </div>
             </div>

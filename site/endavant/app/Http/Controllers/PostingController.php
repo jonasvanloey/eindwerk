@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Admin\CRUDController;
 use App\Repositories\ChatgroupRepository;
 use App\Repositories\MessageRepository;
+use App\Repositories\PortfolioRepository;
 use App\Repositories\PostingRepository;
 use App\Repositories\StudentRepository;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
@@ -13,15 +14,16 @@ use Illuminate\Support\Facades\Auth;
 
 class PostingController extends CRUDController
 {
-    public $repository, $chatgrouprepository, $messagerepository, $postingrepository, $studentRepository;
+    public $repository, $chatgrouprepository, $messagerepository, $postingrepository, $studentRepository, $portfolioRepository;
 
-    public function __construct(PostingRepository $repository, ChatgroupRepository $chatgroupRepository, MessageRepository $messagerepository, StudentRepository $studentRepository)
+    public function __construct(PostingRepository $repository, ChatgroupRepository $chatgroupRepository, MessageRepository $messagerepository, StudentRepository $studentRepository, PortfolioRepository $portfolioRepository)
     {
         $this->repository = $repository;
         $this->chatgrouprepository = $chatgroupRepository;
         $this->messagerepository = $messagerepository;
         $this->studentRepository = $studentRepository;
-        $this->Mess = $chatgroupRepository;
+        $this->chatgrouprepository = $chatgroupRepository;
+        $this->portfolioRepository = $portfolioRepository;
         $this->viewFolder = 'postings';
         $this->NameOfRoute = 'jobs';
     }
@@ -129,6 +131,18 @@ class PostingController extends CRUDController
 
     public function roundup($id, $posting_id)
     {
+        $chatgroup = $this->chatgrouprepository->find($id);
+        $chatgroupids = $chatgroup->users->pluck('id');
+        if ($chatgroupids->contains(Auth::user()->id)) {
+            $posting = $this->repository->find($posting_id);
+            $this->portfolioRepository->create([
+                'student_id' => $posting->student_id,
+                'posting_id' => $posting_id
+            ]);
+            $this->repository->update($posting,['is_finished'=>1]);
+
+            return redirect()->route('giveRating', [$posting_id,$posting->student_id]);
+        }
 
     }
 

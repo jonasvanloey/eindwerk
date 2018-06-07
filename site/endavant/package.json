@@ -25,6 +25,7 @@
         "font-awesome": "^4.7.0",
         "laravel-echo": "^1.4.0",
         "pusher-js": "^4.2.2",
-        "tinymce": "^4.7.13"
+        "tinymce": "^4.7.13",
+        "vue-star-rating": "^1.6.0"
     }
 }

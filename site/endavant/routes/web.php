@@ -28,6 +28,7 @@ Route::get('jobs/create', 'PostingController@create')->middleware('auth','role:c
 
 Route::resource('favorite', 'FavoriteController');
 
+
 Route::post('/favoritejob', 'FavoriteController@addToFave')->name('favoritejob');
 
 Auth::routes();
@@ -40,3 +41,7 @@ Route::get('inbox/{id}/giveto/{user_id}','PostingController@givetouser')->name('
 Route::get('inbox/{id}/roundup/{posting_id}','PostingController@roundup')->name('roundup')->middleware('auth','role:company');
 Route::get('messages/{id}', 'MessageController@fetchMessages');
 Route::post('messages/{id}', 'MessageController@sendMessage');
+
+Route::resource('rating', 'RatingController')->middleware('auth');
+Route::get('rating/{posting_id}/{student_id}','RatingController@StudentRating')->name('giveRating')->middleware('auth','role:company');
+Route::post('rating/{posting_id}/{student_id}/store','RatingController@storestudentrating')->name('storestudentrating')->middleware('auth','role:company');

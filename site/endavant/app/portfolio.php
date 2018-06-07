@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class portfolio extends Model
 {
-    protected $fillable = ['title', 'link', 'description'];
+    protected $fillable = ['student_id', 'link', 'description','posting_id'];
 
     public function student()
     {
@@ -16,4 +16,10 @@ class portfolio extends Model
     {
         return $this->morphMany(image::class, 'imageable');
     }
+
+    public function posting()
+    {
+        return $this->belongsTo(posting::class);
+    }
+
 }

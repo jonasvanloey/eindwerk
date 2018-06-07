@@ -21,7 +21,12 @@ class CompanyController extends CRUDController
     public function show($id){
         $data['item'] = $this->repository->find($id);
         Mapper::map($data['item']['latitude'],$data['item']['longtitude'],['zoom' => 15, 'markers' => ['animation' => 'DROP'],'mapTypeControl'=>false,'streetViewControl'=>false]);
-
+        if($data['item']->ratings->avg('rating')===null){
+            $data['avg']=0;
+        }
+        else{
+            $data['avg']=$data['item']->ratings->avg('rating');
+        }
         return view($this->viewFolder . '.detail', $data);
 
     }

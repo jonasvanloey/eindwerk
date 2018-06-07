@@ -26,6 +26,12 @@ class StudentController extends CRUDController
         $data['item'] = $this->repository->find($id);
         Mapper::map($data['item']['user']['latitude'],$data['item']['user']['longtitude'],['zoom' => 15, 'markers' => ['animation' => 'DROP'],'mapTypeControl'=>false,'streetViewControl'=>false]);
 
+        if($data['item']->ratings->avg('rating')===null){
+            $data['avg']=0;
+        }
+        else{
+            $data['avg']=$data['item']->ratings->avg('rating');
+        }
         return view($this->viewFolder . '.detail', $data);
     }
     public function edit($id)

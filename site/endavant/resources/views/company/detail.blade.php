@@ -74,7 +74,8 @@
                 <div class="col-12 col-md-12">
                     <h2>Rating</h2>
                 </div>
-                <div class="col-12 col-md-12">
+                <div id="app" class="col-12 col-md-12">
+                    <star-rating :rating="{{$avg}}" :read-only="true" :increment="0.01"></star-rating>
                     <p>{{count($item->ratings)}} reviews</p>
                 </div>
                 <div class="col-12 col-md-12">

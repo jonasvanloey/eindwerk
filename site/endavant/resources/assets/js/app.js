@@ -29,7 +29,7 @@ tinymce.init({
     advlist_bullet_styles: 'circle'
 });
 
-
+import StarRating from 'vue-star-rating'
 require('./bootstrap');
 window.Vue = require('vue');
 
@@ -42,6 +42,7 @@ window.Vue = require('vue');
 Vue.component('chat-messages', require('./components/ChatMessages.vue'));
 Vue.component('chat-form', require('./components/ChatForm.vue'));
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('star-rating', StarRating);
 
 const app = new Vue({
     el: '#app',
