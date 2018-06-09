@@ -19,10 +19,10 @@
                     <p>{{$item->zip_code}} {{$item->city}}</p>
                 </div>
                 <div class="col-md-12">
-                    @if(Auth::check()&& $item->id===Auth::user()->companies->first()->id)
-                        <a href="{{route('company.edit',$item->id)}}" class="btn-grey btn"><span
-                                    class="fa fa-edit"></span>bedrijf
-                            aanpassen</a>
+                    @if(Auth::check()&& Auth::user()->hasRole('company'))
+                        @if($item->id===Auth::user()->companies->first()->id)
+                            c
+                        @endif
                     @endif
                 </div>
                 <hr>
@@ -43,10 +43,23 @@
                     <div class="col-md-12">
                         <p>{{$user->email}}</p>
                     </div>
+                @if($user->id===Auth::user()->id)
+                    <div class="col-md-12">
+                        <a href="{{route('user.edit',$user->id)}}" class="btn-grey btn"><span
+                                    class="fa fa-edit"></span>werknemer
+                            aanpassen</a>
+                    </div>
+                    @endif
                 @endforeach
                 <div class="col-md-12 ">
-                    @if(Auth::check()&& !$item->id===Auth::user()->companies->first()->id)
-                        <a href="" class="btn col-md-12">Toevoegen aan favorieten</a>
+                    @if(Auth::check()&& Auth::user()->hasRole('company'))
+                        @if(!isset(Auth::user()->companies))
+                            <a href="" class="btn col-md-12">Toevoegen aan favorieten</a>
+                        @else
+                            @if(!$item->id===Auth::user()->companies->first()->id)
+                                <a href="" class="btn col-md-12">Toevoegen aan favorieten</a>
+                            @endif
+                        @endif
                     @endif
                 </div>
             </div>

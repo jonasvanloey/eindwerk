@@ -44,6 +44,8 @@
                             @if(Auth::user()->hasRole('student'))
                                 <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\StudentController')) }}"
                                    href="{{route('profile.show',Auth::user()->student->id)}}">Profiel</a>
+                                <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\MyJobController')) }}"
+                                   href="{{route('myjobs.index')}}">Mijn jobs</a>
                             @elseif(Auth::user()->hasRole('company'))
                                 <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\CompanyController')) }}"
                                    href="{{route('company.show',Auth::user()->companies->first()->id)}}">Bedrijf</a>

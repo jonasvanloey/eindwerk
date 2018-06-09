@@ -62,10 +62,10 @@ class CRUDController extends BaseController
 
     public function update(Request $request, $id)
     {
-
-        $item = $this->repository->update($id, $request->all());
-
-        return redirect()->route($this->NameOfRoute . '.index', $item->id);
+        $model=$this->repository->find($id);
+        $this->repository->update($model, $request->all());
+        $item=$this->repository->find($id);
+        return redirect()->route($this->redirectRoute, $item->id);
     }
 
     //TODO checken of de functies hier onder wel gebruikt worden.

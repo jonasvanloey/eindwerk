@@ -38,4 +38,7 @@ class posting extends Model
     {
         return $this->hasOne(portfolio::class);
     }
+    public function ratings(){
+        return $this->hasMany(rating::class);
+    }
 }

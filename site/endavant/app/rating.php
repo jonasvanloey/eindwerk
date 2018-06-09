@@ -20,4 +20,7 @@ class rating extends Model
     public function favorites(){
         return $this->hasMany(favorite::class);
     }
+    public function posting(){
+        return $this->belongsTo(posting::class);
+    }
 }

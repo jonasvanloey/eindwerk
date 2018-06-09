@@ -23,7 +23,10 @@
                             <div class="col-12 col-md-7">
                                 <a href="{{route('showmessage',$group->id)}}">{{$group->posting->title}}</a>
                             </div>
-                            <div class="col-12 col-md-2"><span class="fa fa-trash"></span>delete</div>
+                            <div class="col-12 col-md-2">
+                                {{ Form::open(['method' => 'DELETE', 'route' => ['deletemessage', $group->id]]) }}
+                                {{ Form::submit('delete', ['class' => 'btn btn-danger']) }}
+                                {{ Form::close() }}</div>
                         </div>
 
                     @endforeach

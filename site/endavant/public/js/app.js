@@ -91539,7 +91539,7 @@ var render = function() {
         type: "text",
         name: "message",
         placeholder: "Type your message here...",
-        disabled: _vm.active
+        disabled: !_vm.active
       },
       domProps: { value: _vm.newMessage },
       on: {
@@ -91566,7 +91566,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-primary btn-sm",
-          attrs: { id: "btn-chat", disabled: _vm.active },
+          attrs: { id: "btn-chat", disabled: !_vm.active },
           on: { click: _vm.sendMessage }
         },
         [_vm._v("\n            Send\n        ")]

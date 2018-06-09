@@ -14,12 +14,10 @@
                 @include('partials.text',['label'=>'Email adres','name'=>'data[user][email]','value'=>$item->user->email])
             </div>
             <div class="col-12 col-md-6">
-                @include('partials.text',['label'=>'Geboortedatum','name'=>'data[user][date_of_birth]','value'=>$item->user->date_of_birth])
+                <label for="date_of_birth">Geboortedatum</label>
+                <input id="txtDate" name="data[user][date_of_birth]" type="text" placeholder="DD/MM/YYYY" class="form-control" value="{{$item->user->date_of_birth}}">
             </div>
             <div class="col-12 col-md-6">
-                @include('partials.text',['label'=>'Rijksregisternummer','name'=>'data[user][national_register]','value'=>$item->user->national_register])
-            </div>
-            <div class="col-12 col-md-12">
                 @include('partials.text',['label'=>'Telefoonnummer','name'=>'data[user][phone_number]','value'=>$item->user->phone_number])
             </div>
             <div class="col-12 col-md-12">

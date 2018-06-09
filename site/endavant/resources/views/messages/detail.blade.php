@@ -22,12 +22,21 @@
                     <div class="col-md-12">
                         <p>{{$item->posting->company->zip_code}} {{$item->posting->company->city}}</p>
                     </div>
+                    @if($item->posting->is_finished === 1)
+                            @if(!$item->posting->ratings->pluck('company_id')->contains($item->posting->company_id))
+                            <div class="col-md-12">
+                                <a href="{{route('giveRating',[$item->posting->id,$item->posting->company->id])}}"
+                                   class="btn col-md-12">Rating geven</a>
+                            </div>
+                        @endif
+                    @endif
                 @elseif(Auth::user()->hasRole('company'))
                     <div class="col-md-12">
                         <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
                     </div>
                     <div class="col-md-12">
-                        <h2 class="name-title"><a href="#"><b> {{$student->name}} {{$student->familyname}}</b></a></h2>
+                        <h2 class="name-title"><a href="#"><b> {{$student->name}} {{$student->familyname}}</b></a>
+                        </h2>
                     </div>
                     <div class="col-md-12">
                         <p>{{$student->phone_number}}</p>
@@ -38,14 +47,18 @@
                     <div class="col-md-12">
                         <p>{{$student->zip_code}} {{$student->city}}</p>
                     </div>
-                @if($item->posting->student_id === null)
-                    <div class="col-md-12">
-                            <a href="{{route('givetouser',[$item->id,$student->id])}}" class="btn col-md-12">Project toewijzen</a>
+                    @if($item->posting->student_id === null)
+                        <div class="col-md-12">
+                            <a href="{{route('givetouser',[$item->id,$student->id])}}" class="btn col-md-12">Project
+                                toewijzen</a>
                         </div>
                     @else
-                        <div class="col-md-12">
-                            <a href="{{route('roundup',[$item->id,$item->posting->id,])}}" class="btn col-md-12">Project afronden</a>
-                        </div>
+                        @if($item->posting->is_finished === 0)
+                            <div class="col-md-12">
+                                <a href="{{route('roundup',[$item->id,$item->posting->id,])}}"
+                                   class="btn col-md-12">Project afronden</a>
+                            </div>
+                        @endif
                     @endif
                 @endif
             </div>

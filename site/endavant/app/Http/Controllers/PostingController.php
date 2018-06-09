@@ -134,6 +134,9 @@ class PostingController extends CRUDController
         $chatgroup = $this->chatgrouprepository->find($id);
         $chatgroupids = $chatgroup->users->pluck('id');
         if ($chatgroupids->contains(Auth::user()->id)) {
+            $message = "Het project is afgelopen.";
+            $this->messagerepository->sendMessage($message, $chatgroup->id);
+            $this->repository->update($chatgroup,['is_active'=>0]);
             $posting = $this->repository->find($posting_id);
             $this->portfolioRepository->create([
                 'student_id' => $posting->student_id,

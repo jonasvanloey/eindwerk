@@ -57,8 +57,12 @@
                     <h2>Portfolio</h2>
                 </div>
                 <div class="col-12 col-md-12">
-                    <div class="col-12 col-md-6">
-                        {{$item->portfolios[1]->posting}}
+                     <div class="row">
+                        @foreach($item->portfolios as $port)
+                        <div class="col-12 col-md-6">
+                            @include('partials.portfolio',['title'=>$port->posting->title,'name'=>$port->posting->company->users[0]->name.' '.$port->posting->company->users[0]->familyname,'company'=>$port->posting->company->name,'adress'=>$port->posting->company->adress,'city'=>$port->posting->company->zip_code,'port_id'=>$port->id,'id'=>$item->id])
+                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-12 col-md-12">

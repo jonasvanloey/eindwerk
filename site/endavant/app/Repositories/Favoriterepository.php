@@ -20,8 +20,8 @@ class Favoriterepository extends AbstractRepository
         })->first();
         $isStudent=student::where('user_id',$id)->first();
         if($isCompany===null && $isStudent !== null){
-            $job=favorite::where('student_id', $id)->where('company_id', null)->where('type', 'student');
-            $company=favorite::where('student_id', $id)->where('posting_id', null)->where('type', 'student');
+            $job=favorite::where('student_id', $isStudent->id)->where('company_id', null)->where('type', 'student');
+            $company=favorite::where('student_id', $isStudent->id)->where('posting_id', null)->where('type', 'student');
             if (request()->has('date')) {
                 $data['jobs'] = $job->orderBy('created_at','DESC')->get();
                 $data['companies'] =$company->orderBy('created_at','DESC')->get();
@@ -39,7 +39,7 @@ class Favoriterepository extends AbstractRepository
                 $data['companies'] =$company->get();
             }
         }else{
-            $data['students']=favorite::where('company_id',$id)->where('type','company')->get();
+            $data['students']=favorite::where('company_id',$isCompany->id)->where('type','company')->get();
         }
         return $data;
     }

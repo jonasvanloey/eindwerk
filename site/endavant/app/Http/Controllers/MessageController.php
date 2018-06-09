@@ -94,5 +94,17 @@ class MessageController extends Controller
         }
 
     }
+    public function delete($id){
+        $chatgroup = $this->chatgroupRepository->find($id);
+        $chatgroupids = $chatgroup->users->pluck('id');
+        if ($chatgroupids->contains(Auth::user()->id)) {
+            if($chatgroup->posting->is_finished===1){
+                $chatgroup->users()->detach(Auth::user()->id);
+                return redirect('inbox');
+            }
+            return redirect('inbox');
+        }
+        return redirect('inbox');
+    }
     //
 }

@@ -24,12 +24,10 @@
                 </div>
             </div>
             <div class="col-12 col-md-6">
-                @include('partials.text',['label'=>'Geboortedatum','name'=>'date_of_birth'])
+                <label for="date_of_birth">Geboortedatum</label>
+                <input id="txtDate" name="date_of_birth" type="text" placeholder="DD/MM/YYYY" class="form-control">
             </div>
             <div class="col-12 col-md-6">
-                @include('partials.text',['label'=>'Rijksregisternummer','name'=>'national_register'])
-            </div>
-            <div class="col-12 col-md-12">
                 @include('partials.text',['label'=>'Telefoonnummer','name'=>'phone_number'])
             </div>
             <div class="col-12 col-md-12">
