@@ -1,6 +1,12 @@
 <div class="row no-gutters">
-    <div class="col-12 col-md-3">
-
+    <div id="app" class="col-12 col-md-3">
+        <image-cropper
+                :path="'{{$item->user->image}}'"
+                :resource="'profile-pic'"
+                :key-name="'image'"
+                :aspect-ratio="1"
+        >
+        </image-cropper>
     </div>
     <div class="col-12 col-md-9">
         <div class="row">

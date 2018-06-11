@@ -8,15 +8,16 @@ use App\Repositories\MessageRepository;
 use App\Repositories\PortfolioRepository;
 use App\Repositories\PostingRepository;
 use App\Repositories\StudentRepository;
+use App\Repositories\TagRepository;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostingController extends CRUDController
 {
-    public $repository, $chatgrouprepository, $messagerepository, $postingrepository, $studentRepository, $portfolioRepository;
+    public $repository, $chatgrouprepository, $messagerepository, $postingrepository, $studentRepository, $portfolioRepository, $tagRepository;
 
-    public function __construct(PostingRepository $repository, ChatgroupRepository $chatgroupRepository, MessageRepository $messagerepository, StudentRepository $studentRepository, PortfolioRepository $portfolioRepository)
+    public function __construct(PostingRepository $repository, ChatgroupRepository $chatgroupRepository, MessageRepository $messagerepository, StudentRepository $studentRepository, PortfolioRepository $portfolioRepository, TagRepository $tagRepository)
     {
         $this->repository = $repository;
         $this->chatgrouprepository = $chatgroupRepository;
@@ -24,14 +25,16 @@ class PostingController extends CRUDController
         $this->studentRepository = $studentRepository;
         $this->chatgrouprepository = $chatgroupRepository;
         $this->portfolioRepository = $portfolioRepository;
+        $this->tagRepository = $tagRepository;
         $this->viewFolder = 'postings';
         $this->NameOfRoute = 'jobs';
     }
 
     public function index()
     {
-        $data['items'] = $this->repository->findWhere(['student_id' => null]);
+        $data['items'] = $this->repository->findJobs()->paginate(12);
         $data['favs'] = $this->repository->getfavs();
+        $data['tags']= $this->tagRepository->all();
 
         return view($this->viewFolder . '.index', $data);
     }
@@ -82,6 +85,19 @@ class PostingController extends CRUDController
             return redirect('/inbox');
         }
     }
+    public function create()
+    {
+        $data['tags']= $this->tagRepository->all();
+        return view($this->viewFolder . '.create',$data);
+    }
+    public function edit($id)
+    {
+        $data['item'] = $this->repository->find($id);
+        $data['tags']= $this->tagRepository->all();
+
+        return view($this->viewFolder . '.edit', $data);
+    }
+
 
     public function store(Request $request)
     {
@@ -93,7 +109,31 @@ class PostingController extends CRUDController
             'postingtype_id' => 1
 
         ]);
+        foreach($request['tags'] as $tag){
+            $item->tags()->attach($tag);
+        }
+
         return redirect()->route($this->NameOfRoute . '.show', $item->id);
+    }
+    public function update(Request $request, $id)
+    {
+        $model=$this->repository->find($id);
+        $this->repository->update($model, [
+            'title' => $request['title'],
+            'reason' => $request['reason'],
+            'description' => $request['description'],
+            'company_id' => $this->repository->getCompanyId(),
+            'postingtype_id' => 1
+
+        ]);
+        $item=$this->repository->find($id);
+        $item->tags()->sync([]);
+        if(isset($request['tags'])){
+            foreach($request['tags'] as $tag){
+                $item->tags()->attach($tag);
+            }
+        }
+        return redirect()->route('jobs.show', $item->id);
     }
 
     public function givetouser($id, $user_id)

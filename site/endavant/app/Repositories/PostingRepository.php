@@ -31,6 +31,9 @@ class PostingRepository extends AbstractRepository
         })->first();
         return $company_id->id;
     }
+    public function findJobs(){
+        return posting::where('student_id',null);
+    }
     //TODO delete favorites if posting is deleted
 
 }

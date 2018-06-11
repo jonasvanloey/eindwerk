@@ -7,6 +7,8 @@ use App\Repositories\CompanyRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
+use Illuminate\Support\Facades\Storage;
+use Webpatser\Uuid\Uuid;
 
 class CompanyController extends CRUDController
 {
@@ -51,4 +53,30 @@ class CompanyController extends CRUDController
         }
         return redirect()->route('home');
     }
+    public function uploadImage( Request $request,$id)
+    {
+
+        $store = Storage::disk('s3');
+        $model = $this->repository->find($id);
+        $key = $request->input('key');
+        $base64 = $request->input('image');
+        [$mime, $data] = explode(';', $base64);
+        [$filetype, $ext] = explode('/', $mime);
+        [$prefix, $imageString] = explode(',', $data);
+        $raw = base64_decode($imageString);
+        $fileName = $request->input('resource') . '/' . Uuid::generate(4) . '.' . $ext;
+
+        if ($store->exists($model->{$key})) {
+            $store->delete($model->{$key});
+        }
+        $store->put($fileName, $raw, 'public');
+        $model->{$key} = Storage::disk('s3')->url($fileName);
+        $model->save();
+
+        return response()->json([
+            'url' => Storage::disk('s3')->url($fileName)
+        ]);
+
+    }
+
 }

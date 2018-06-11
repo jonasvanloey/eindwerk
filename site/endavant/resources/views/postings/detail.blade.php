@@ -6,6 +6,17 @@
                 <h1>
                     {{$item->title}}
                 </h1>
+                @if(Auth::check()&& Auth::user()->hasRole('company'))
+                    @if($item->company->id===Auth::user()->companies->first()->id)
+                        <a href="{{route('jobs.edit',$item->id)}}" class="btn-grey btn"><span
+                                    class="fa fa-edit"></span> aanpassen</a>
+                    @endif
+                @endif
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 offset-sm-0">
+                @foreach($item->tags as $tag)
+                    <p class="tag">{{$tag->tag}}</p>
+                @endforeach
             </div>
         </div>
         <div class="row">
@@ -38,8 +49,10 @@
 
                         </div>
                         <div class="row no-gutters">
+                            @if(Auth::check() &&!Auth::user()->hasRole('company'))
                             <a href="{{route('showapply',$item->id)}}" class="btn big col-12 col-md-12 no-gutters">Neem
                                 deel aan dit project</a>
+                            @endif
                             <br>
                         </div>
                     </div>
@@ -50,8 +63,11 @@
                             </div>
                             <div class="col-12 col-md-12 overzicht-block no-gutters text-center">
                                 <div class="col-md-12">
-                                    <img src="{{asset('img/imgplaceholder.jpg')}}" alt=""
-                                         class="rounded-circle profile-pic">
+                                    @if($item->company->users[0]->image === null)
+                                        <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                                    @else
+                                        <img src="{{$item->company->users[0]->image}}" alt="" class="rounded-circle profile-pic">
+                                    @endif
                                 </div>
                                 <div class="col-md-12">
                                     <h2 class="name-title"><a

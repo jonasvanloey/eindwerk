@@ -16,6 +16,9 @@ Route::resource('', 'HomeController');
 Route::resource('user', 'UserController');
 
 Route::get('profile/{id}/edit', 'StudentController@edit')->middleware('auth');
+Route::post('profile/{id}/image', 'StudentController@uploadImage')->middleware('auth');
+Route::post('company/{id}/image', 'CompanyController@uploadImage')->middleware('auth');
+Route::post('user/{id}/image', 'UserController@uploadImage')->middleware('auth');
 Route::get('profile/{id}/portfolio/{portfoio_id}', 'PortfolioController@getportfolio')->name('getportfolio');
 Route::resource('profile', 'StudentController');
 Route::resource('portfolio', 'PortfolioController');

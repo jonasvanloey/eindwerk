@@ -2,10 +2,7 @@
     <h2 class="accent">Bedrijfsgegevens</h2>
 </div>
 <div class="row no-gutters">
-    <div class="col-12 col-md-3">
-
-    </div>
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
         <div class="row">
             <div class="col-12 col-md-12">
                 @include('partials.text',['label'=>'Naam onderneming','name'=>'company[name]'])

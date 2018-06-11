@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cropper.min.css') }}" rel="stylesheet">
 
     <title>Endavant</title>
 </head>
@@ -37,7 +38,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-nav">
+                            @if(Auth::user()->image === null)
+                                <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                            @else
+                                <img src="{{Auth::user()->image}}" alt="" class="rounded-circle profile-nav">
+                            @endif
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">

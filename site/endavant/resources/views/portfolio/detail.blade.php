@@ -41,8 +41,11 @@
                             </div>
                             <div class="col-12 col-md-12 overzicht-block no-gutters text-center">
                                 <div class="col-md-12">
-                                    <img src="{{asset('img/imgplaceholder.jpg')}}" alt=""
-                                         class="rounded-circle profile-pic">
+                                    @if($item->company->users[0]->image === null)
+                                        <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                                    @else
+                                        <img src="{{$item->company->users[0]->image}}" alt="" class="rounded-circle profile-pic">
+                                    @endif
                                 </div>
                                 <div class="col-md-12">
                                     <h3 class="name-title"><a

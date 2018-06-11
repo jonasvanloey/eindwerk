@@ -66,9 +66,12 @@ class PostingSeeder extends Seeder
         $pos2->postingtype_id = 1;
         $pos2->save();
 
-        $pos3 = new \App\posting();
-        $pos3->title = 'Dit is de titel van de job';
-        $pos3->description = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tria genera bonorum; Multoque hoc melius nos veriusque quam Stoici. Quod quidem nobis non saepe contingit. </p>
+
+
+        for($i=0;$i<80;$i++){
+            $pos3 = new \App\posting();
+            $pos3->title = 'Dit is de titel van de job'.$i;
+            $pos3->description = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tria genera bonorum; Multoque hoc melius nos veriusque quam Stoici. Quod quidem nobis non saepe contingit. </p>
 
 <ol>
 	<li>Duo Reges: constructio interrete.</li>
@@ -79,11 +82,14 @@ class PostingSeeder extends Seeder
 
 
 ';
-        $pos3->reason = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Qualem igitur hominem natura inchoavit? Ea possunt paria non esse. Sed ad rem redeamus; Duo Reges: constructio interrete. </p>
+            $pos3->reason = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Qualem igitur hominem natura inchoavit? Ea possunt paria non esse. Sed ad rem redeamus; Duo Reges: constructio interrete. </p>
 ';
-        $pos3->company_id = 1;
-        $pos3->postingtype_id = 1;
-        $pos3->save();
+            $pos3->company_id = 1;
+            $pos3->postingtype_id = 1;
+            $pos3->save();
+        }
+
+
 
     }
 }

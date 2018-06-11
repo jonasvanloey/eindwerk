@@ -1,8 +1,5 @@
 <div class="row no-gutters">
-    <div class="col-12 col-md-3">
-
-    </div>
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
         <div class="row">
             <div class="col-12 col-md-4 col-sm-12 col-xs-12">
                 @include('partials.text',['label'=>'Voornaam','name'=>'name'])
@@ -47,7 +44,7 @@
     @include('auth.partials.company')
 </div>
 <div class="row  ">
-    <div class="col-12 col-md-4 offset-md-3">
+    <div class="col-12 col-md-4">
         {!! Form::submit('Registreer', array('class' => 'btn big')) !!}
     </div>
     <div class="col-12 col-md-4 ">

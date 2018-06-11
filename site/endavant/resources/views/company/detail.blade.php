@@ -4,7 +4,11 @@
         <div class="row">
             <div class="col-12 col-md-3 overzicht-block text-center">
                 <div class="col-md-12">
-                    <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                    @if($item->image === null)
+                        <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                    @else
+                        <img src="{{$item->image}}" alt="" class="rounded-circle profile-pic">
+                    @endif
                 </div>
                 <div class="col-md-12">
                     <h2 class="name-title"><a href="#"><b>{{$item->name}}</b></a></h2>
@@ -21,7 +25,9 @@
                 <div class="col-md-12">
                     @if(Auth::check()&& Auth::user()->hasRole('company'))
                         @if($item->id===Auth::user()->companies->first()->id)
-                            c
+                            <a href="{{route('company.edit',$item->id)}}" class="btn-grey btn"><span
+                                        class="fa fa-edit"></span>info
+                                aanpassen</a>
                         @endif
                     @endif
                 </div>
@@ -32,7 +38,11 @@
                 @foreach($item->users as $user)
 
                     <div class="col-md-12">
-                        <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                        @if($user->image === null)
+                            <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                        @else
+                            <img src="{{$user->image}}" alt="" class="rounded-circle profile-pic">
+                        @endif
                     </div>
                     <div class="col-md-12">
                         <h3 class="name-title"><b>{{$user->name}} {{$user->familyname}}</b></h3>

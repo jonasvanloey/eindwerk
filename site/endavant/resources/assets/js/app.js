@@ -43,6 +43,7 @@ Vue.component('chat-messages', require('./components/ChatMessages.vue'));
 Vue.component('chat-form', require('./components/ChatForm.vue'));
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('star-rating', StarRating);
+Vue.component('image-cropper', require('./components/ImageUpload.vue'));
 
 const app = new Vue({
     el: '#app',

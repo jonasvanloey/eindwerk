@@ -8,7 +8,11 @@
             <div class="col-md-3 overzicht-block text-center">
                 @if(Auth::user()->hasRole('student'))
                     <div class="col-md-12">
-                        <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                        @if($item->posting->company->image === null)
+                            <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                        @else
+                            <img src="{{$item->posting->company->image}}" alt="" class="rounded-circle profile-pic">
+                        @endif
                     </div>
                     <div class="col-md-12">
                         <h2 class="name-title"><a href="#"><b> {{$item->posting->company->name}}</b></a></h2>
@@ -32,7 +36,11 @@
                     @endif
                 @elseif(Auth::user()->hasRole('company'))
                     <div class="col-md-12">
-                        <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                        @if($student->image === null)
+                            <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                        @else
+                            <img src="{{$student->image}}" alt="" class="rounded-circle profile-pic">
+                        @endif
                     </div>
                     <div class="col-md-12">
                         <h2 class="name-title"><a href="#"><b> {{$student->name}} {{$student->familyname}}</b></a>

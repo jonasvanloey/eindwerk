@@ -4,7 +4,11 @@
         <div class="row">
             <div class="col-12 col-md-3 overzicht-block text-center">
                 <div class="col-md-12">
-                    <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                    @if($item->user->image === null)
+                        <img src="{{asset('img/imgplaceholder.jpg')}}" alt="" class="rounded-circle profile-pic">
+                    @else
+                        <img src="{{$item->user->image}}" alt="" class="rounded-circle profile-pic">
+                    @endif
                 </div>
                 <div class="col-md-12">
                     <h2 class="name-title"><a href="#"><b>{{$item->user->name}} {{$item->user->familyname}}</b></a></h2>
