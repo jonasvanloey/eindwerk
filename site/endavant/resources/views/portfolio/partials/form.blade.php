@@ -5,6 +5,11 @@
     <div class="col-12 col-md-8 offset-md-2">
         @include('partials.text',['name'=>'link','label'=>null,'value'=>$item->link])
     </div>
+    @if ($errors->has('link'))
+        <span class="help-block">
+                        <strong>{{ $errors->first('link') }}</strong>
+                    </span>
+    @endif
 </div>
 <div class="row">
     <div class="col-12 col-md-8 offset-md-2">

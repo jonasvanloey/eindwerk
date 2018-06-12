@@ -6,7 +6,7 @@ $link_limit = 7; // maximum number of links (a little bit inaccurate, but will b
 @if ($paginator->lastPage() > 1)
     <ul class="pagination">
         <li class="  {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
-            <a href="{{ $paginator->url(1) }}" class="btn btn-grey">Eerste</a>
+            <a href="{{ $paginator->appends(request()->except('page'))->url(1)  }}" class="btn btn-grey">Eerste</a>
         </li>
         @for ($i = 1; $i <= $paginator->lastPage(); $i++)
             <?php
@@ -22,12 +22,12 @@ $link_limit = 7; // maximum number of links (a little bit inaccurate, but will b
             ?>
             @if ($from < $i && $i < $to)
                 <li class="{{ ($paginator->currentPage() == $i) ? ' active' : '' }}">
-                    <a href=" {{ $paginator->url($i) }}" class="btn btn-grey">{{ $i }}</a>
+                    <a href=" {{ $paginator->appends(request()->except('page'))->url($i) }}" class="btn btn-grey">{{ $i }}</a>
                 </li>
             @endif
         @endfor
         <li class="{{ ($paginator->currentPage() == $paginator->lastPage()) ? ' disabled' : '' }}">
-            <a href="{{ $paginator->url($paginator->lastPage()) }}" class="btn btn-grey">Laatste</a>
+            <a href="{{ $paginator->appends(request()->except('page'))->url($paginator->lastPage())}}" class="btn btn-grey">Laatste</a>
         </li>
     </ul>
 @endif

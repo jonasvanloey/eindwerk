@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\CRUDController;
+use App\Http\Requests\UserRequest;
 use App\Repositories\StudentRepository;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Http\Request;
@@ -22,10 +23,12 @@ class UserController extends CRUDController
         $this->studentRepository = $studentRepository;
         $this->viewFolder = 'user';
         $this->redirectRoute = 'company.show';
+        $this->formRequest = new UserRequest;
     }
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->getRules());
         $model = $this->repository->find($id);
         if (Auth::user()->id === intval($id)) {
             $this->repository->update($model, $request->all());

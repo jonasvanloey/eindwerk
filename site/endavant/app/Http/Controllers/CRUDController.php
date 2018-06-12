@@ -48,6 +48,7 @@ class CRUDController extends BaseController
     }
     public function store(Request $request)
     {
+
         $item = $this->repository->create($request->all());
 
         return redirect()->route($this->NameOfRoute  . '.index', $item->id);
@@ -67,25 +68,6 @@ class CRUDController extends BaseController
         $item=$this->repository->find($id);
         return redirect()->route($this->redirectRoute, $item->id);
     }
-
-    //TODO checken of de functies hier onder wel gebruikt worden.
-
-
-
-
-
-
-
-    public function sort(Request $request)
-    {
-        $this->repository->sort($request->all());
-    }
-
-    public function dataTable(Request $request)
-    {
-        return $this->repository->dataTable($request->all());
-    }
-
     protected function getRules()
     {
         if ($this->formRequest) {
@@ -94,4 +76,5 @@ class CRUDController extends BaseController
 
         return [];
     }
+
 }

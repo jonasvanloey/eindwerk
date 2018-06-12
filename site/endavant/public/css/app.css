@@ -13578,6 +13578,27 @@ footer {
   border: 3px solid #D1D1D1;
 }
 
+.btn-red {
+  border-radius: 5px;
+  margin: 2px;
+  background: darkred;
+  color: white;
+  border: 3px solid darkred;
+}
+
+.btn-red.big {
+  padding: 15px 36px;
+  font-size: 1.2em;
+  min-width: 209.52px;
+  height: 63px;
+}
+
+.btn-red:hover {
+  color: darkred;
+  background: white;
+  border: 3px solid darkred;
+}
+
 .landing {
   height: 707px;
   background-image: url("/img/landing.jpg");
@@ -13818,5 +13839,19 @@ label.star:before {
   background-color: #FCD939;
   -webkit-box-shadow: inset 0 0px 6px rgba(0, 0, 0, 0.16);
   box-shadow: inset 0 0px 6px rgba(0, 0, 0, 0.16);
+}
+
+.help-block {
+  color: darkred;
+}
+
+.error {
+  min-height: 75vh;
+  color: #D1D1D1;
+  text-align: center;
+}
+
+.error .error-code {
+  font-size: 20em;
 }
 

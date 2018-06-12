@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\JobFilter;
 use App\Http\Controllers\Admin\CRUDController;
+use App\Http\Requests\PostingRequest;
+use App\posting;
 use App\Repositories\ChatgroupRepository;
 use App\Repositories\MessageRepository;
 use App\Repositories\PortfolioRepository;
@@ -28,13 +31,35 @@ class PostingController extends CRUDController
         $this->tagRepository = $tagRepository;
         $this->viewFolder = 'postings';
         $this->NameOfRoute = 'jobs';
+        $this->formRequest = new PostingRequest;
     }
 
-    public function index()
+    public function postingIndex(Request $request)
     {
-        $data['items'] = $this->repository->findJobs()->paginate(12);
+        $title = null;
+        $tags = null;
+        $zip_code = null;
+        $distance = null;
+        if ($request->has('title')) {
+            if ($request['title'] !== null) {
+                $title = $request['title'];
+            }
+        }
+        if ($request->has('tags')) {
+            if ($request['tags'] !== null) {
+                $tags = $request['tags'];
+            }
+        }
+        if ($request->has('zip-code')) {
+            if ($request['zip-code'] !== null) {
+                $zip_code = $request['zip-code'];
+                $distance = $request['afstand'];
+            }
+        }
+
+        $data['items'] = $this->repository->findJobs($title, $tags, $zip_code, $distance)->paginate(12);
         $data['favs'] = $this->repository->getfavs();
-        $data['tags']= $this->tagRepository->all();
+        $data['tags'] = $this->tagRepository->all();
 
         return view($this->viewFolder . '.index', $data);
     }
@@ -85,22 +110,31 @@ class PostingController extends CRUDController
             return redirect('/inbox');
         }
     }
+
     public function create()
     {
-        $data['tags']= $this->tagRepository->all();
-        return view($this->viewFolder . '.create',$data);
+        $data['tags'] = $this->tagRepository->all();
+        return view($this->viewFolder . '.create', $data);
     }
+
     public function edit($id)
     {
         $data['item'] = $this->repository->find($id);
-        $data['tags']= $this->tagRepository->all();
+        if (Auth::check() && Auth::user()->hasRole('company')) {
+            if ($data['item']->company->users->pluck('id')->contains(Auth::user()->id)) {
+                $data['tags'] = $this->tagRepository->all();
 
-        return view($this->viewFolder . '.edit', $data);
+                return view($this->viewFolder . '.edit', $data);
+            }
+        }
+        return redirect('jobs');
+
     }
 
 
     public function store(Request $request)
     {
+        $this->validate($request, $this->getRules());
         $item = $this->repository->create([
             'title' => $request['title'],
             'reason' => $request['reason'],
@@ -109,15 +143,17 @@ class PostingController extends CRUDController
             'postingtype_id' => 1
 
         ]);
-        foreach($request['tags'] as $tag){
+        foreach ($request['tags'] as $tag) {
             $item->tags()->attach($tag);
         }
 
         return redirect()->route($this->NameOfRoute . '.show', $item->id);
     }
+
     public function update(Request $request, $id)
     {
-        $model=$this->repository->find($id);
+        $this->validate($request, $this->getRules());
+        $model = $this->repository->find($id);
         $this->repository->update($model, [
             'title' => $request['title'],
             'reason' => $request['reason'],
@@ -126,10 +162,10 @@ class PostingController extends CRUDController
             'postingtype_id' => 1
 
         ]);
-        $item=$this->repository->find($id);
+        $item = $this->repository->find($id);
         $item->tags()->sync([]);
-        if(isset($request['tags'])){
-            foreach($request['tags'] as $tag){
+        if (isset($request['tags'])) {
+            foreach ($request['tags'] as $tag) {
                 $item->tags()->attach($tag);
             }
         }
@@ -176,17 +212,29 @@ class PostingController extends CRUDController
         if ($chatgroupids->contains(Auth::user()->id)) {
             $message = "Het project is afgelopen.";
             $this->messagerepository->sendMessage($message, $chatgroup->id);
-            $this->repository->update($chatgroup,['is_active'=>0]);
+            $this->repository->update($chatgroup, ['is_active' => 0]);
             $posting = $this->repository->find($posting_id);
             $this->portfolioRepository->create([
                 'student_id' => $posting->student_id,
                 'posting_id' => $posting_id
             ]);
-            $this->repository->update($posting,['is_finished'=>1]);
+            $this->repository->update($posting, ['is_finished' => 1]);
 
-            return redirect()->route('giveRating', [$posting_id,$posting->student_id]);
+            return redirect()->route('giveRating', [$posting_id, $posting->student_id]);
         }
 
+    }
+
+    public function destroy($id)
+    {
+        $data['item'] = $this->repository->find($id);
+        if (Auth::check() && Auth::user()->hasRole('company')) {
+            if ($data['item']->company->users->pluck('id')->contains(Auth::user()->id)) {
+                $this->repository->delete($id);
+            }
+        }
+
+        return redirect('/jobs');
     }
 
 }

@@ -20,6 +20,7 @@
                     <div class="col-12 col-md-2 text-right">
                         <a href="{{url('jobs/create')}}" class="btn big">Plaats een job</a>
                     </div>
+
                 @endif
             </div>
         </div>
@@ -27,9 +28,41 @@
     <div id="collapseFilter" class="row collapse filter multi-collapse">
         <div class="wrapper big">
             <br>
-            <div class="col-12 col-md-2">
-                <label for="search">Zoek</label>
-                <input type="text" name="search" class="form-control">
+            <div class="row no-gutters">
+                <div class="col-12 col-md-8 no-gutters">
+                    {!!  Form::open(['url' => '/jobs','method' => 'GET']) !!}
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <label for="title">Zoek op titel</label>
+                            <input type="text" name="title" class="form-control">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="zip-code">Adres</label>
+                            <input type="text" name="zip-code" class="form-control">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="afstand">Max afstand</label>
+                            <select name="afstand" class="form-control">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="50+">50+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        @foreach($tags as $tag)
+                            <div class="col-12 col-md-2">
+                                {{ Form::checkbox('tags[]',$tag->id,isset($item->tags) && $item->tags()->pluck('tag_id')->contains($tag->id)? true: false)}} {{$tag->tag}}
+                            </div>
+                        @endforeach
+                    </div>
+                    {!! Form::submit('Zoek',array('class' => 'btn btn-grey')) !!}
+                    <a href="/jobs" class="btn btn-grey">Filter resetten</a>
+                    {!! Form::close() !!}
+                </div>
             </div>
             <br>
         </div>

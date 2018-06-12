@@ -1,6 +1,11 @@
 <div class="row">
     <div class="col-12 col-md-8 offset-md-2">
         @include('partials.text',['name'=>'title','label'=>'Titel','value'=> isset($item->title)? $item->title : ''])
+        @if ($errors->has('title'))
+            <span class="help-block">
+                        <strong>{{ $errors->first('title') }}</strong>
+                    </span>
+        @endif
     </div>
 </div>
 <div class="row">
@@ -13,6 +18,11 @@
                 {!!$item->reason!!}
             @endif
         </div>
+        @if ($errors->has('reason'))
+            <span class="help-block">
+                        <strong>{{ $errors->first('reason') }}</strong>
+                    </span>
+        @endif
     </div>
 </div>
 <div class="row">
@@ -25,6 +35,11 @@
                 {!!  $item->description !!}
             @endif
         </div>
+        @if ($errors->has('description'))
+            <span class="help-block">
+                        <strong>{{ $errors->first('description') }}</strong>
+                    </span>
+        @endif
     </div>
 </div>
 <br>

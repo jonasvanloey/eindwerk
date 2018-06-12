@@ -28,8 +28,9 @@ Route::resource('myjobs', 'MyJobController')->middleware('auth','role:student');
 
 Route::resource('company', 'CompanyController');
 Route::resource('jobs', 'PostingController');
-Route::get('jobs/{id}/apply', 'PostingController@showapply')->name('showapply');
-Route::post('jobs/{id}/apply/store', 'PostingController@storeapply')->name('storeapply');
+Route::get('/jobs', 'PostingController@postingIndex');
+Route::get('jobs/{id}/apply', 'PostingController@showapply')->name('showapply')->middleware('auth','role:student');
+Route::post('jobs/{id}/apply/store', 'PostingController@storeapply')->name('storeapply')->middleware('auth','role:student');
 
 Route::get('jobs/create', 'PostingController@create')->middleware('auth','role:company');
 

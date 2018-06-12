@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class company extends Model
 {
-    protected $fillable = ['name', 'vat_number', 'adress', 'phone_number', 'description'];
+    protected $fillable = ['name', 'vat_number', 'adress', 'phone_number', 'description','latitude','longtitude','city','zip_code'];
 
     //
     public function favorites(){

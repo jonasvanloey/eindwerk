@@ -121,6 +121,24 @@ footer {
     border: 3px solid $secondary-accent;
   }
 }
+.btn-red {
+  border-radius:5px;
+  margin:2px;
+  background: darkred;
+  color: white;
+  border: 3px solid darkred;
+  &.big {
+    padding: 15px 36px;
+    font-size: 1.2em;
+    min-width:209.52px;
+    height:63px;
+  }
+  &:hover {
+    color: darkred;
+    background: $main;
+    border: 3px solid darkred;
+  }
+}
 
 .landing {
   height: 707px;
@@ -359,4 +377,21 @@ label.star:before {
   -moz-box-shadow:    inset 0 0px 6px rgba(0, 0, 0, 0.16);
   -webkit-box-shadow: inset 0 0px 6px rgba(0, 0, 0, 0.16);
   box-shadow:         inset 0 0px 6px rgba(0, 0, 0, 0.16);
+}
+
+//validation
+.help-block{
+  color:darkred;
+}
+
+//ERROR
+
+.error{
+  min-height:75vh;
+  color: $secondary-accent;
+  text-align: center;
+  .error-code{
+
+    font-size:20em;
+  }
 }

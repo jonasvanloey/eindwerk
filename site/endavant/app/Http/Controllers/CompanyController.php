@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\CRUDController;
+use App\Http\Requests\CompanyRequest;
 use App\Repositories\CompanyRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Geocoder\Facades\Geocoder;
 use Webpatser\Uuid\Uuid;
 
 class CompanyController extends CRUDController
@@ -19,6 +21,7 @@ class CompanyController extends CRUDController
         $this->repository = $repository;
         $this->viewFolder = 'company';
         $this->NameOfRoute = 'company';
+        $this->formRequest = new CompanyRequest;
     }
     public function show($id){
         $data['item'] = $this->repository->find($id);
@@ -44,11 +47,23 @@ class CompanyController extends CRUDController
     }
     public function update(Request $request, $id)
     {
-
+        $this->validate($request, $this->getRules());
         $company=$this->repository->find($id);
         if( Auth::check()&& $company->users->pluck('id')->contains(Auth::user()->id)) {
-            $this->repository->update($company, $request['company']);
-            $this->repository->update($company, ['description' => $request['description']]);
+            $adress2 = $request['company']['adress'].' '.$request['company']['zip_code'].' '.$request['company']['city'];
+            $afterGeo2=Geocoder::getCoordinatesForAddress($adress2);
+
+            $this->repository->update($company,[
+                'name'=>$request['company']['name'],
+                'vat_number'=>$request['company']['vat_number'],
+                'adress'=>$request['company']['adress'],
+                'phone_number'=>$request['company']['phone_number'],
+                'city'=>$request['company']['city'],
+                'zip_code'=>$request['company']['zip_code'],
+                'latitude'=>$afterGeo2['lat'],
+                'longtitude'=>$afterGeo2['lng'],
+                'description' => $request['description']
+            ]);
             return redirect()->route($this->NameOfRoute . '.show', $company->id);
         }
         return redirect()->route('home');
