@@ -55,3 +55,5 @@ Route::resource('rating', 'RatingController')->middleware('auth');
 Route::get('rating/{posting_id}/{student_id}','RatingController@StudentRating')->name('giveRating')->middleware('auth');
 Route::post('rating/{posting_id}/{student_id}/store','RatingController@storestudentrating')->name('storestudentrating')->middleware('auth','role:company');
 Route::post('rating/{posting_id}/{company_id}/storecompany','RatingController@storecompanyrating')->name('storecompanyrating')->middleware('auth','role:student');
+
+Route::get('/FAQ', 'FAQController@index');

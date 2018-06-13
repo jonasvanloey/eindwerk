@@ -13855,3 +13855,9 @@ label.star:before {
   font-size: 20em;
 }
 
+.faqbtn {
+  margin-top: 27px;
+  display: block;
+  width: 100%;
+}
+

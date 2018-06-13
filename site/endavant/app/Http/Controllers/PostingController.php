@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Filters\JobFilter;
 use App\Http\Controllers\Admin\CRUDController;
 use App\Http\Requests\PostingRequest;
+use App\Jobs\SendProjectFinished;
+use App\Jobs\SendUserChosen;
+use App\Jobs\SendUserNotChosen;
 use App\posting;
 use App\Repositories\ChatgroupRepository;
 use App\Repositories\MessageRepository;
@@ -12,15 +15,17 @@ use App\Repositories\PortfolioRepository;
 use App\Repositories\PostingRepository;
 use App\Repositories\StudentRepository;
 use App\Repositories\TagRepository;
+use App\Repositories\UserRepository;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Queue;
 
 class PostingController extends CRUDController
 {
-    public $repository, $chatgrouprepository, $messagerepository, $postingrepository, $studentRepository, $portfolioRepository, $tagRepository;
+    public $repository, $chatgrouprepository, $messagerepository, $postingrepository, $studentRepository, $portfolioRepository, $tagRepository,$userRepository;
 
-    public function __construct(PostingRepository $repository, ChatgroupRepository $chatgroupRepository, MessageRepository $messagerepository, StudentRepository $studentRepository, PortfolioRepository $portfolioRepository, TagRepository $tagRepository)
+    public function __construct(PostingRepository $repository, ChatgroupRepository $chatgroupRepository, MessageRepository $messagerepository, StudentRepository $studentRepository, PortfolioRepository $portfolioRepository, TagRepository $tagRepository,UserRepository $userRepository)
     {
         $this->repository = $repository;
         $this->chatgrouprepository = $chatgroupRepository;
@@ -28,6 +33,7 @@ class PostingController extends CRUDController
         $this->studentRepository = $studentRepository;
         $this->chatgrouprepository = $chatgroupRepository;
         $this->portfolioRepository = $portfolioRepository;
+        $this->userRepository = $userRepository;
         $this->tagRepository = $tagRepository;
         $this->viewFolder = 'postings';
         $this->NameOfRoute = 'jobs';
@@ -107,7 +113,7 @@ class PostingController extends CRUDController
             return redirect('/inbox');
 
         } else {
-            return redirect('/inbox');
+            return redirect('/home');
         }
     }
 
@@ -183,11 +189,24 @@ class PostingController extends CRUDController
                 $student = $this->studentRepository->findWhere(['user_id' => $user_id])->first();
                 foreach ($groups as $group) {
                     if ($group->id === intval($id)) {
+
+
                         $message = "Het project is aan jou toegewezen. ";
                         $this->messagerepository->sendMessage($message, $group->id);
                         $this->repository->update($posting, ['student_id' => $student->id]);
 
+                        $groupstud=$this->studentRepository->find($this->repository->find($group->id));
+                        $user = $this->userRepository->find($groupstud[0]->user_id);
+                        Queue::push(new SendUserChosen($user,$group->posting));
+
                     } else {
+                        foreach($group->users as $gu){
+                            if($this->studentRepository->all()->pluck('user_id')->contains($gu->id)){
+                                $user=$this->repository->find($gu->id);
+                                Queue::push(new SendUserNotChosen($user,$group->posting));
+                            }
+
+                        }
 
                         $message = "Het spijt ons om het je te moeten melden maar we hebben voor iemand anders gekozen om ons project af te werken. We hopen nog met jou te kunnen werken in de toekomst.";
                         $this->messagerepository->sendMessage($message, $group->id);
@@ -219,6 +238,11 @@ class PostingController extends CRUDController
                 'posting_id' => $posting_id
             ]);
             $this->repository->update($posting, ['is_finished' => 1]);
+
+            $student=$this->studentRepository->find($posting->student_id);
+            $user=$this->userRepository->find($student->user_id);
+
+            Queue::push(new SendProjectFinished($user,$posting));
 
             return redirect()->route('giveRating', [$posting_id, $posting->student_id]);
         }

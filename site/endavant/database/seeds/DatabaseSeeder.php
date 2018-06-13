@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleTableSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(PostingSeeder::class);
-        $this->call(TagSeeder::class);
+        $this->call(FAQSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Model::reguard();

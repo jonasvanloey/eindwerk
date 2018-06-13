@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\company;
+use App\Jobs\SendUserRegistered;
 use App\Role;
 use App\student;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Spatie\Geocoder\Facades\Geocoder;
@@ -52,7 +54,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -61,14 +63,18 @@ class RegisterController extends Controller
             'adress' => 'required|string',
             'city' => 'required|string',
             'zip_code' => 'required|string',
-            'company.name'=>'required_with:company.vat_number,company.phone_number,company.adress,company.city,company.zip_code|string',
-            'company.vat_number'=>'required_with:company.name,company.phone_number,company.adress,company.city,company.zip_code|string',
-            'company.phone_number'=>'required_with:company.name,company.vat_number,company.adress,company.city,company.zip_code|string',
-            'company.adress'=>'required_with:company.name,company.phone_number,company.vat_number,company.city,company.zip_code|string',
-            'company.city'=>'required_with:company.name,company.phone_number,company.adress,company.vat_number,company.zip_code|string',
-            'company.zip_code'=>'required_with:company.name,company.phone_number,company.adress,company.city,company.vat_number|string',
+            'company.name'=>'required_with:company.vat_number,company.phone_number,company.adress,company.city,company.zip_code',
+            'company.vat_number'=>'required_with:company.name,company.phone_number,company.adress,company.city,company.zip_code',
+            'company.phone_number'=>'required_with:company.name,company.vat_number,company.adress,company.city,company.zip_code',
+            'company.adress'=>'required_with:company.name,company.phone_number,company.vat_number,company.city,company.zip_code',
+            'company.city'=>'required_with:company.name,company.phone_number,company.adress,company.vat_number,company.zip_code',
+            'company.zip_code'=>'required_with:company.name,company.phone_number,company.adress,company.city,company.vat_number',
 
         ]);
+        $validator->sometimes(['company.name','company.vat_number','company.phone_number','company.adress','company.city','company.zip_code'], 'string', function($data){
+            return $data->exists;
+        });
+        return$validator;
     }
 
     /**
@@ -119,6 +125,7 @@ class RegisterController extends Controller
 
 
         }
+        Queue::push(new SendUserRegistered($user));
 
 
         return $user;
