@@ -34,10 +34,18 @@ Route::post('jobs/{id}/apply/store', 'PostingController@storeapply')->name('stor
 
 Route::get('jobs/create', 'PostingController@create')->middleware('auth','role:company');
 
+
+Route::post('/favorite/addcompany/{company_id}', 'FavoriteController@addCompToFave')->name('addCompToFave')->middleware('auth','role:student');
+Route::delete('/favorite/addcompany/{company_id}', 'FavoriteController@addCompToFave')->name('addCompToFave')->middleware('auth','role:student');
+
+Route::post('/favorite/addStudent/{student_id}', 'FavoriteController@addStudToFave')->name('addStudToFave')->middleware('auth','role:company');
+Route::delete('/favorite/addStudent/{student_id}', 'FavoriteController@addStudToFave')->name('addStudToFave')->middleware('auth','role:company');
+
 Route::resource('favorite', 'FavoriteController');
 
 
 Route::post('/favoritejob', 'FavoriteController@addToFave')->name('favoritejob');
+
 
 Auth::routes();
 

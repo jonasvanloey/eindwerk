@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Admin\CRUDController;
 use App\Http\Requests\CompanyRequest;
 use App\Repositories\CompanyRepository;
+use App\Repositories\StudentRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
@@ -14,11 +16,12 @@ use Webpatser\Uuid\Uuid;
 
 class CompanyController extends CRUDController
 {
-    public $repository;
+    public $repository, $studentRepository;
 
-    public function __construct(CompanyRepository $repository)
+    public function __construct(CompanyRepository $repository, StudentRepository $studentRepository)
     {
         $this->repository = $repository;
+        $this->studentRepository = $studentRepository;
         $this->viewFolder = 'company';
         $this->NameOfRoute = 'company';
         $this->formRequest = new CompanyRequest;
@@ -26,6 +29,13 @@ class CompanyController extends CRUDController
     public function show($id){
         $data['item'] = $this->repository->find($id);
         Mapper::map($data['item']['latitude'],$data['item']['longtitude'],['zoom' => 15, 'markers' => ['animation' => 'DROP'],'mapTypeControl'=>false,'streetViewControl'=>false]);
+        $data['postings']=$this->repository->findPostings($id)->paginate(10);
+        if(Auth::check() && Auth::user()->hasRole('student'))
+        {
+            $data['favorites']=$this->studentRepository->findWhere(['user_id'=>Auth::user()->id])->first()->favorites->where('posting_id',null)->pluck('company_id');
+
+        }
+
         if($data['item']->ratings->avg('rating')===null){
             $data['avg']=0;
         }

@@ -56,7 +56,7 @@
                         <div class="col-md-12">
                             <p>{{$user->email}}</p>
                         </div>
-                        @if($user->id===Auth::user()->id)
+                        @if(Auth::check() && $user->id===Auth::user()->id)
                             <div class="col-md-12">
                                 <a href="{{route('user.edit',$user->id)}}" class="btn-grey btn"><span
                                             class="fa fa-edit"></span>werknemer
@@ -66,7 +66,15 @@
                     @endforeach
                     <div class="col-md-12 ">
                         @if(Auth::check()&& Auth::user()->hasRole('student'))
-                            <a href="" class="btn col-md-12">Toevoegen aan favorieten</a>
+                            @if(!$favorites->contains($item->id))
+                                {!!  Form::open(['url' => route('addCompToFave',$item->id),'method' => 'POST']) !!}
+                                {!! Form::submit('Toevoegen aan favorieten',array('class' => 'btn col-md-12')) !!}
+                                {!! Form::close() !!}
+                            @else
+                                {{ Form::open(['method' => 'DELETE', 'url' => route('addCompToFave',$item->id)]) }}
+                                {{ Form::submit('Verwijder uit favorieten', ['class' => 'btn btn-red col-md-12']) }}
+                                {{ Form::close() }}
+                            @endif
                         @endif
                     </div>
                     <br>
@@ -105,11 +113,14 @@
                 </div>
                 <div class="col-12 col-md-12">
                     <div class="row">
-                        @foreach($item->postings as $item)
+                        @foreach($postings as $item)
                             <div class="col-12 col-md-6">
                                 @include('partials.job',['title'=>$item->title,'name'=>$item->company->users[0]->name.' '.$item->company->users[0]->familyname,'company'=>$item->company->name,'adress'=>$item->company->adress,'city'=>$item->company->zip_code,'item'=>'jobs','id'=>$item->id])
                             </div>
                         @endforeach
+                        <div class="col-12 col-md-12 col-sm-7">
+                            @include('pagination.default', ['paginator' => $postings])
+                        </div>
                     </div>
 
                 </div>

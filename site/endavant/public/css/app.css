@@ -13582,6 +13582,10 @@ footer {
   background-color: white;
 }
 
+footer img {
+  margin-top: 5px;
+}
+
 .btn {
   margin: 2px;
   background: #FCD939;
@@ -13963,9 +13967,33 @@ label.star:before {
   border-bottom: none;
 }
 
+.small-screen {
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
-  .headline {
-    font-size: 1em;
+  .landing h1 {
+    font-size: 3em !important;
+    margin-bottom: 50px;
+  }
+
+  .landing {
+    height: 500px;
+  }
+
+  .content {
+    padding: 5px !important;
+  }
+}
+
+@media only screen and (max-width: 355px) {
+  .small-screen {
+    display: block;
+    padding: 20px 20px;
+  }
+
+  .big-screen {
+    display: none;
   }
 }
 

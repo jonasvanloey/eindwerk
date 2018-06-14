@@ -40,7 +40,7 @@
                 @if(!$companies->isEmpty())
                     @foreach($companies as $company)
                         <div class="col-12 col-md-3">
-
+                            @include('partials.user',['image'=>$company->company->image,'name'=>$company->company->name,'item'=>'company','id'=>$company->company->id,'favitem'=>$company])
                         </div>
                     @endforeach
                 @else
@@ -60,7 +60,7 @@
                 @if(!$students->isEmpty())
                     @foreach($students as $student)
                         <div class="col-12 col-md-3">
-
+                            @include('partials.user',['image'=>$student->student->user->image,'name'=>$student->student->user->name,'familyname'=>$student->student->user->familyname,'item'=>'profile','id'=>$student->student->id,'favitem'=>$student])
                         </div>
                     @endforeach
                 @else

@@ -85,7 +85,7 @@
         </div>
     </div>
 </div>
-<div id="collapseBusiness" class="row no-gutters company collapse multi-collapse">
+<div id="collapseBusiness" class="row no-gutters company collapse multi-collapse {{Request::has('werkgever')? 'show' : ''}}">
     <hr>
     @include('auth.partials.company')
 </div>
@@ -93,8 +93,9 @@
     <div class="col-12 col-md-4">
         {!! Form::submit('Registreer', array('class' => 'btn big')) !!}
     </div>
+
     <div class="col-12 col-md-4 ">
         <a class="btn btn-grey big registerbusinessbtn" data-toggle="collapse" href="#collapseBusiness" role="button"
-           aria-expanded="false" aria-controls="collapseBusiness">Ik ben een werkgever</a>
+           aria-expanded="{{Request::has('werkgever')? 'true' : 'false'}}" aria-controls="collapseBusiness">Ik ben een werkgever</a>
     </div>
 </div>

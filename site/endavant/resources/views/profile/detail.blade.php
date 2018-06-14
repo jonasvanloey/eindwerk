@@ -32,6 +32,20 @@
                         </div>
                     </div>
                     <br>
+                    <div class="col-md-12 ">
+                        @if(Auth::check()&& Auth::user()->hasRole('company'))
+                            @if(!$favorites->contains($item->id))
+                                {!!  Form::open(['url' => route('addStudToFave',$item->id),'method' => 'POST']) !!}
+                                {!! Form::submit('Toevoegen aan favorieten',array('class' => 'btn col-md-12')) !!}
+                                {!! Form::close() !!}
+                            @else
+                                {{ Form::open(['method' => 'DELETE', 'url' => route('addStudToFave',$item->id)]) }}
+                                {{ Form::submit('Verwijder uit favorieten', ['class' => 'btn btn-red col-md-12']) }}
+                                {{ Form::close() }}
+                            @endif
+                        @endif
+                    </div>
+                    <br>
                 </div>
             </div>
             <div class="col-12 col-md-9 profile-info">

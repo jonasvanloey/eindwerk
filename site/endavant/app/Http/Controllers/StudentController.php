@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\CRUDController;
+use App\Repositories\CompanyRepository;
 use App\Repositories\StudentRepository;
 use App\Repositories\UserRepository;
 use App\student;
@@ -15,19 +16,24 @@ use Webpatser\Uuid\Uuid;
 
 class StudentController extends CRUDController
 {
-    public $repository, $userrepository;
+    public $repository, $userrepository, $companyRepository;
 
-    public function __construct(StudentRepository $repository, UserRepository $userrepository)
+    public function __construct(StudentRepository $repository, UserRepository $userrepository, CompanyRepository $companyRepository)
     {
         $this->repository = $repository;
         $this->userrepository = $userrepository;
+        $this->companyRepository = $companyRepository;
         $this->viewFolder = 'profile';
         $this->NameOfRoute='profile';
     }
     public function show($id){
         $data['item'] = $this->repository->find($id);
         Mapper::map($data['item']['user']['latitude'],$data['item']['user']['longtitude'],['zoom' => 15, 'markers' => ['animation' => 'DROP'],'mapTypeControl'=>false,'streetViewControl'=>false]);
+        if(Auth::check() && Auth::user()->hasRole('company'))
+        {
+            $data['favorites']=$this->companyRepository->find(Auth::user()->companies[0]->id)->favorites->where('posting_id',null)->pluck('student_id');
 
+        }
         if($data['item']->ratings->avg('rating')===null){
             $data['avg']=0;
         }

@@ -1,11 +1,11 @@
 @extends('main')
 @section('content')
     <section class="landing d-flex justify-content-center ">
-        <div class="d-flex flex-column align-self-center">
+        <div class="d-flex flex-column align-self-center text-center">
             <h1 class="headline">Vindt een studentenjob die echt bij jouw studierichting past.</h1>
             <div class="d-flex flex-column flex-md-row justify-content-around">
-                <a href="" class="btn big "> Ik ben student</a>
-                <a href="" class="btn big "> Ik ben werkgever</a>
+                <a href="{{Auth::check()? url('/jobs') : route('register')}}" class="btn big "> Ik ben student</a>
+                <a href="{{Auth::check()? url('/jobs') : route('register','werkgever')}}" class="btn big "> Ik ben werkgever</a>
             </div>
         </div>
     </section>
@@ -26,7 +26,7 @@
                                     prachtige carriere in de wereld van de multimedia.</p>
                             </div>
                             <div class="btnr ">
-                                <a href="" class="btn big "> Ik ben student</a>
+                                <a href="{{Auth::check()? url('/jobs') : route('register')}}" class="btn big "> Ik ben student</a>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                                     door uw project uit te werken tot een kwaliteitsvol en vernieuwend eindproduct.</p>
                             </div>
                             <div class=" btnr">
-                                <a href="" class="btn big "> Ik ben werkgever</a>
+                                <a href="{{Auth::check()? url('/jobs') : route('register','werkgever')}}" class="btn big "> Ik ben werkgever</a>
                             </div>
                         </div>
                     </div>
@@ -60,10 +60,10 @@
                                 <h2>Nog vragen?</h2>
                                 <p>Heb je nog vragen in verband met het Endavant platform neem dan gerust een kijkje bij
                                     onze FAQ, of stel zelf een vraag aan ons en onze community.</p>
-                                <a href="" class="btn big "> FAQ</a>
+
                             </div>
                             <div class=" btnr">
-                                <a href="" class="btn big "> Community</a>
+                                <a href="" class="btn big "> FAQ</a>
                             </div>
                         </div>
                     </div>
@@ -101,9 +101,11 @@
                             <span class="fa fa-user"></span>
                         </div>
                         <div class="col-md-10">
-                            <p>Als student kan je je aanmelden voor projecten die geplaatst zijn door ondernemingen. Je kan
-                            er zelf voor kiezen om enkel projecten voor ondernemingen in jouw buurt te doen of om wat
-                            verder te gaan zoeken.</p>
+                            <p>Als student kan je je aanmelden voor projecten die geplaatst zijn door ondernemingen. Je
+                                kan
+                                er zelf voor kiezen om enkel projecten voor ondernemingen in jouw buurt te doen of om
+                                wat
+                                verder te gaan zoeken.</p>
                         </div>
                     </div>
                 </div>
@@ -182,11 +184,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row ">
-                <div class="col-md-12 text-center">
-                    <a href="" class="btn big ">Schrijf je nu in en doe mee</a>
+            @if(!Auth::check())
+                <div class="row ">
+                    <div class="col-md-12 text-center">
+                        <a href="{{route('register')}}" class="btn big big-screen ">Schrijf je nu in en doe mee</a>
+                        <a href="{{route('register')}}" class="btn small-screen ">Schrijf je nu in en doe mee</a>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </section>
 @endsection

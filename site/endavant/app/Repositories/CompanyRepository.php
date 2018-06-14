@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\posting;
 use Torann\LaravelRepository\Repositories\AbstractRepository;
 
 class CompanyRepository extends AbstractRepository
@@ -13,4 +14,7 @@ class CompanyRepository extends AbstractRepository
      */
     protected $model = \App\company::class;
 
+    public function findPostings($id){
+        return posting::where('company_id',$id);
+    }
 }

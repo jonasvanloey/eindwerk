@@ -122,6 +122,9 @@ footer {
   box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.16);
   background-color: $main;
 }
+footer img{
+  margin-top:5px;
+}
 
 //HOME
 .btn {
@@ -516,10 +519,30 @@ label.star:before {
 .message-row:last-child{
   border-bottom:none;
 }
-
+.small-screen{
+  display:none;
+}
 
 @media only screen and (max-width: 600px) {
-  .headline {
-    font-size:1em;
+  .landing h1 {
+    font-size:3em !important;
+    margin-bottom:50px;
   }
+  .landing{
+    height:500px;
+  }
+  .content{
+    padding:5px !important;
+  }
+}
+
+@media only screen and (max-width: 355px) {
+  .small-screen{
+    display:block;
+    padding:20px 20px;
+  }
+  .big-screen{
+      display:none;
+  }
+
 }

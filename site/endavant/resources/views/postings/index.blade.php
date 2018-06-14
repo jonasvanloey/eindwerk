@@ -3,7 +3,7 @@
 
     <br>
     <div class="row">
-        <div class="wrapper big">
+        <div class="wrapper hw  big">
             <div class="row nogutters">
                 <div class="col-12 col-md-10 ">
                     <div class="row no-gutters">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div id="collapseFilter" class="row collapse filter multi-collapse">
-        <div class="wrapper big">
+        <div class="wrapper hw big">
             <br>
             <div class="row no-gutters">
                 <div class="col-12 col-md-8 no-gutters">
