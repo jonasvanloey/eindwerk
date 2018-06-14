@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class=" wrapper container">
         <div class="row"><h1>{{$item->posting->title}}</h1></div>
         <div class="row">
             <div class="col-md-3 overzicht-block text-center">
@@ -15,7 +15,7 @@
                         @endif
                     </div>
                     <div class="col-md-12">
-                        <h2 class="name-title"><a href="#"><b> {{$item->posting->company->name}}</b></a></h2>
+                        <h2 class="name-title"><a href="{{route('company.show',$item->posting->company->id)}}"><b> {{$item->posting->company->name}}</b></a></h2>
                     </div>
                     <div class="col-md-12">
                         <p>{{$item->posting->company->phone_number}}</p>
@@ -43,7 +43,7 @@
                         @endif
                     </div>
                     <div class="col-md-12">
-                        <h2 class="name-title"><a href="#"><b> {{$student->name}} {{$student->familyname}}</b></a>
+                        <h2 class="name-title"><a href="{{route('profile.show',$student->id)}}"><b> {{$student->name}} {{$student->familyname}}</b></a>
                         </h2>
                     </div>
                     <div class="col-md-12">

@@ -2,15 +2,15 @@
 @section('content')
     <section class="landing d-flex justify-content-center ">
         <div class="d-flex flex-column align-self-center">
-            <h1 class="p-2">Vindt een studentenjob die echt bij jouw studierichting past.</h1>
-            <div class="d-flex flex-row justify-content-around">
+            <h1 class="headline">Vindt een studentenjob die echt bij jouw studierichting past.</h1>
+            <div class="d-flex flex-column flex-md-row justify-content-around">
                 <a href="" class="btn big "> Ik ben student</a>
                 <a href="" class="btn big "> Ik ben werkgever</a>
             </div>
         </div>
     </section>
     <section class="overview">
-        <div class="wrapper big">
+        <div class="wrapper hw big">
             <div class="row ov-row">
                 <div class="col-md-4 col-sm-12">
                     <div class="overzicht-block">
@@ -25,7 +25,7 @@
                                     een
                                     prachtige carriere in de wereld van de multimedia.</p>
                             </div>
-                            <div class="btnr">
+                            <div class="btnr ">
                                 <a href="" class="btn big "> Ik ben student</a>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
         </div>
     </section>
     <section class="how">
-        <div class="wrapper small">
+        <div class="wrapper hw small">
             <div class="row">
                 <div class="col-md-12">
                     <h2>Hoe gaat Endavant in zijn werk?</h2>

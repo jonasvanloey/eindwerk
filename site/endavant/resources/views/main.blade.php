@@ -55,7 +55,6 @@
                                 <a class="dropdown-item nav-link {{ active_class(if_controller('App\Http\Controllers\CompanyController')) }}"
                                    href="{{route('company.show',Auth::user()->companies->first()->id)}}">Bedrijf</a>
                             @endif
-                            <a class="dropdown-item nav-link" href="invite">Vrienden uitnodigen</a>
                             <a href="{{ url('/logout') }}" class="dropdown-item nav-link"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">Uitloggen
                             </a>

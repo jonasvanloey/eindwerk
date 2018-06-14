@@ -13472,6 +13472,18 @@ body {
   color: #3A3A3A;
 }
 
+a {
+  color: #FCD939;
+}
+
+a:hover {
+  color: #95989A;
+}
+
+a.accent:hover {
+  color: #95989A !important;
+}
+
 .nav-link {
   color: #95989A !important;
 }
@@ -13481,7 +13493,10 @@ body {
 }
 
 .wrapper {
+  min-height: 65vh;
   margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .wrapper.big {
@@ -13495,6 +13510,12 @@ body {
   font-size: 100% !important;
 }
 
+.hw {
+  min-height: 0vh !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
 .top-bar {
   background-color: white;
   -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -13506,9 +13527,34 @@ body {
   text-align: center;
 }
 
+.nav-item .profile-pic {
+  margin-top: 0 !important;
+}
+
+.nav-item .dropdown-item {
+  padding-top: 2% !important;
+}
+
+.nav-item a {
+  padding-top: 25% !important;
+}
+
+.nav-item .dropdown-item.active,
+.nav-item .dropdown-item:active {
+  background: #FCD939 !important;
+}
+
+.nav-item .dropdown-toggle {
+  padding-top: 12% !important;
+}
+
 .nav-item.active a {
   color: #FCD939 !important;
   font-weight: bold;
+}
+
+.nav-link:hover {
+  color: #FCD939 !important;
 }
 
 .profile-nav {
@@ -13744,6 +13790,14 @@ footer {
   min-height: 400px;
 }
 
+.name-title a {
+  color: #3A3A3A;
+}
+
+.name-title a:hover {
+  color: #FCD939;
+}
+
 .chat {
   list-style: none;
   margin: 0;
@@ -13825,6 +13879,28 @@ label.star:before {
   font-family: FontAwesome;
 }
 
+.post-txt {
+  padding-right: 10px !important;
+}
+
+.post-btn {
+  margin-top: 25px;
+}
+
+.post-blck h2 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.post-blck h1 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.no-top {
+  margin-top: 0px !important;
+}
+
 .tag {
   background-color: #FCD939;
   color: white;
@@ -13845,6 +13921,10 @@ label.star:before {
   color: darkred;
 }
 
+.pagination .active a {
+  background-color: white;
+}
+
 .error {
   min-height: 75vh;
   color: #D1D1D1;
@@ -13859,5 +13939,33 @@ label.star:before {
   margin-top: 27px;
   display: block;
   width: 100%;
+}
+
+.faqfield {
+  margin-top: 20px !important;
+}
+
+.faq {
+  padding: 10px;
+  border-bottom: 1px solid #D1D1D1;
+}
+
+.faq:last-child {
+  border-bottom: none;
+}
+
+.message-row {
+  padding: 5px;
+  border-bottom: 1px solid #D1D1D1;
+}
+
+.message-row:last-child {
+  border-bottom: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .headline {
+    font-size: 1em;
+  }
 }
 

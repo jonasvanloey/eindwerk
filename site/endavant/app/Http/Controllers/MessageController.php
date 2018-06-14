@@ -32,6 +32,7 @@ class MessageController extends Controller
     public function index()
     {
         $groups = Auth::user()->chatgroups;
+
         return view('messages.index', compact('groups'));
     }
 

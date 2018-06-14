@@ -14,23 +14,78 @@
                     <p>je hebt nog geen berichten gestuurd.</p>
                 </div>
             @else
-                <div class="col-12 col-md-8 offset-md-2 offset-sm-0 card">
-                    @foreach($groups as $group)
+                @if(Auth::user()->hasRole('student'))
+                    <div class="col-12 col-md-8 offset-md-2 offset-sm-0 card">
+                        @foreach($groups as $group)
 
-                        <div class="row no-gutters">
+                            <div class="row message-row no-gutters">
 
-                            <div class="col-12 col-md-3">{{$group->posting->company->name}}</div>
-                            <div class="col-12 col-md-7">
-                                <a href="{{route('showmessage',$group->id)}}">{{$group->posting->title}}</a>
+                                <div class="col-12 col-md-2 text-center d-flex align-items-center justify-content-center">
+                                    <div class=".row">
+                                        <div class="col-12 col-md-12 ">
+                                            @if($group->posting->company->image === null)
+                                                <img src="{{asset('img/imgplaceholder.jpg')}}" alt=""
+                                                     class="rounded-circle profile-nav">
+                                            @else
+                                                <img src="{{$group->posting->company->image}}"
+                                                     alt="{{$group->posting->company->name}}"
+                                                     class="rounded-circle profile-pic">
+                                            @endif
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            {{$group->posting->company->name}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <h3><a href="{{route('showmessage',$group->id)}}">{{$group->posting->title}}</a>
+                                    </h3>
+                                    <p>{{$group->messages->last()->message}}</p>
+                                </div>
+                                <div class="col-12 col-md-2 text-center d-flex align-items-center justify-content-center ">
+                                    {{ Form::open(['method' => 'DELETE', 'route' => ['deletemessage', $group->id]]) }}
+                                    {{ Form::submit('delete', ['class' => 'btn btn-danger']) }}
+                                    {{ Form::close() }}</div>
                             </div>
-                            <div class="col-12 col-md-2">
-                                {{ Form::open(['method' => 'DELETE', 'route' => ['deletemessage', $group->id]]) }}
-                                {{ Form::submit('delete', ['class' => 'btn btn-danger']) }}
-                                {{ Form::close() }}</div>
-                        </div>
 
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @elseif(Auth::user()->hasRole('company'))
+                    <div class="col-12 col-md-8 offset-md-2 offset-sm-0 card">
+                        @foreach($groups as $group)
+                            <div class="row message-row no-gutters">
+
+                                <div class="col-12 col-md-2 text-center d-flex align-items-center justify-content-center">
+                                    <div class=".row">
+                                        <div class="col-12 col-md-12 ">
+                                            @if($group->users->where('id','!=',Auth::user()->id)->first()->image === null)
+                                                <img src="{{asset('img/imgplaceholder.jpg')}}" alt=""
+                                                     class="rounded-circle profile-nav">
+                                            @else
+                                                <img src=" {{$group->users->where('id','!=',Auth::user()->id)->first()->image}}"
+                                                     alt=" {{$group->users->where('id','!=',Auth::user()->id)->first()->name}}"
+                                                     class="rounded-circle profile-pic">
+                                            @endif
+                                        </div>
+                                        <div class="col-12 col-md-12">
+                                            {{$group->users->where('id','!=',Auth::user()->id)->first()->name}} {{$group->users->where('id','!=',Auth::user()->id)->first()->familyname}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <h3><a href="{{route('showmessage',$group->id)}}">{{$group->posting->title}}</a>
+                                    </h3>
+                                    <p>{{$group->messages->last()->message}}</p>
+                                </div>
+                                <div class="col-12 col-md-2 text-center d-flex align-items-center justify-content-center ">
+                                    {{ Form::open(['method' => 'DELETE', 'route' => ['deletemessage', $group->id]]) }}
+                                    {{ Form::submit('delete', ['class' => 'btn btn-danger']) }}
+                                    {{ Form::close() }}</div>
+                            </div>
+
+                        @endforeach
+                    </div>
+                @endif
             @endif
         </div>
     </div>

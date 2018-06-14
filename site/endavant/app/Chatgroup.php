@@ -13,7 +13,7 @@ class Chatgroup extends Model
     }
     public function messages(){
 
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class,'destination_id');
     }
     public function posting(){
         return $this->belongsTo(posting::class);
