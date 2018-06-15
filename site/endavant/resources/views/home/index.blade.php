@@ -12,8 +12,8 @@
     <section class="overview">
         <div class="wrapper hw big">
             <div class="row ov-row">
-                <div class="col-md-4 col-sm-12">
-                    <div class="overzicht-block">
+                <div class="col-md-4 col-sm-12 overzicht-block mb">
+                    <div class="">
                         <div class="content">
                             <div class="cont">
                                 <span class="fa fa-user"></span>
@@ -31,8 +31,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="overzicht-block">
+                <div class="col-md-4 overzicht-block mb">
+                    <div class="">
                         <div class="content">
                             <div class="cont">
                                 <span class="fa fa-building"></span>
@@ -52,8 +52,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="overzicht-block">
+                <div class="col-md-4 overzicht-block mb">
+                    <div class="">
                         <div class="content">
                             <div class=" cont">
                                 <span class="fa fa-question"></span>

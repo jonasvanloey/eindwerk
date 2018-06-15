@@ -52,6 +52,6 @@ class User extends Authenticatable
     }
     public function chatgroups()
     {
-        return $this->belongsToMany(Chatgroup::class, 'chatgroup_users');
+        return $this->belongsToMany(Chatgroup::class, 'chatgroup_users')->orderBy('id','DESC');;
     }
 }

@@ -86,7 +86,7 @@
 <footer class="d-flex justify-content-center">
     <div class="d-flex flex-column align-self-center">
         <img src="{{asset('img/endavant_logo.svg')}}" alt="logo endavant" class="logo align-self-center">
-        <p><a href="">Algemene voorwaarden</a> | <a href="">Privacy verklaring</a></p>
+        <p><a href="{{url('/algemenevoorwaarden')}}">Algemene voorwaarden</a> | <a href="{{url('/privacyverklaring')}}">Privacy verklaring</a></p>
     </div>
 </footer>
 

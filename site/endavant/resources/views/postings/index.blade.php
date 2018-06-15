@@ -73,13 +73,13 @@
             <div class="col-12 col-md-12">
                 <div class="row">
                     @foreach($items as $item)
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             @include('partials.job',['title'=>$item->title,'name'=>$item->company->users[0]->name.' '.$item->company->users[0]->familyname,'company'=>$item->company->name,'adress'=>$item->company->adress,'city'=>$item->company->zip_code,'item'=>'jobs','id'=>$item->id,'favs'=>$favs])
                         </div>
                     @endforeach
                 </div>
                 <br>
-                <div class="col-12 col-md-12">
+                <div class="col-12 col-md-12 align-content-center">
                     @include('pagination.default', ['paginator' => $items])
                 </div>
                 <br>

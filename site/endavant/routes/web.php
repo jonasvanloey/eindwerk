@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/algemenevoorwaarden',function (){
+    return view('official.AV');
+});
+Route::get('/privacyverklaring',function (){
+    return view('official.privacy');
+});
 
 Route::resource('/', 'HomeController');
 Route::resource('', 'HomeController');

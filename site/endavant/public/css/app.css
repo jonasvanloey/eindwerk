@@ -13664,6 +13664,17 @@ footer img {
   background-color: #EEEDEC;
 }
 
+@media (min-width: 768px) {
+  .mb {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 32%;
+    flex: 0 0 32%;
+    max-width: 32%;
+    margin-left: 0.66% !important;
+    margin-right: 0.66%  !important;
+  }
+}
+
 .overzicht-block {
   margin: 20px 0px;
   background-color: white;
@@ -13839,8 +13850,46 @@ footer img {
   background-color: #555;
 }
 
+@media only screen and (max-width: 470px) {
+  div.starrow {
+    margin-left: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 440px) {
+  div.starrow {
+    margin-left: 7% !important;
+  }
+
+  div.stars {
+    width: 100% !important;
+  }
+
+  label.star {
+    font-size: 40px !important;
+  }
+}
+
+@media only screen and (max-width: 325px) {
+  div.starrow {
+    margin-left: 2% !important;
+  }
+
+  div.stars {
+    width: 100% !important;
+  }
+
+  label.star {
+    font-size: 30px !important;
+  }
+}
+
+div.starrow {
+  margin-left: 7%;
+}
+
 div.stars {
-  width: 270px;
+  width: 500px;
   display: inline-block;
 }
 
@@ -13851,7 +13900,7 @@ input.star {
 label.star {
   float: right;
   padding: 10px;
-  font-size: 36px;
+  font-size: 70px;
   color: #444;
   -webkit-transition: all .2s;
   transition: all .2s;
@@ -13929,6 +13978,10 @@ label.star:before {
   background-color: white;
 }
 
+.fa-star {
+  margin-top: -10px;
+}
+
 .error {
   min-height: 75vh;
   color: #D1D1D1;
@@ -13989,10 +14042,26 @@ label.star:before {
 @media only screen and (max-width: 355px) {
   .small-screen {
     display: block;
-    padding: 20px 20px;
+    padding: 20px 0px;
   }
 
   .big-screen {
+    display: none;
+  }
+}
+
+.mobile-pa {
+  display: none;
+}
+
+@media only screen and (max-width: 440px) {
+  .mobile-pa {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+
+  .pagination {
     display: none;
   }
 }

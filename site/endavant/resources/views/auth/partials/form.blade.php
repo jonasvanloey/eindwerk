@@ -26,11 +26,15 @@
                 @endif
             </div>
             <div class="col-12 col-md-6 col-sm-12 col-xs-12">
-                @include('partials.text',['label'=>'Wachtwoord','name'=>'password'])
-                 @if ($errors->has('password'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('passsword') }}</strong>
-                    </span>
+                <label for="password">Wachtwoord</label>
+                <input id="password" type="password"
+                       class="form-control"
+                       name="password" required>
+
+                @if ($errors->has('password'))
+                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
                 @endif
             </div>
             <div class="col-12 col-md-6">
@@ -38,7 +42,11 @@
                     <label for="password-confirm" class="col-form-label text-md-right">Bevestig wachtwoord</label>
                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
                            required>
-
+                    @if ($errors->has('password'))
+                        <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                    @endif
                 </div>
             </div>
             <div class="col-12 col-md-6">
