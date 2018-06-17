@@ -95,10 +95,14 @@
                             {!! $item->description !!}
                         </p>
                     @else
-                        <div class="col-12 col-md-12 text-center add-description">
-                            <span class="fa fa-edit"></span>
-                            <a href="">add description</a>
-                        </div>
+                        @if(Auth::check()&& Auth::user()->hasRole('company'))
+                            @if($item->id===Auth::user()->companies->first()->id)
+                                <div class="col-12 col-md-12 text-center add-description">
+                                    <span class="fa fa-edit"></span>
+                                    <a href="">add description</a>
+                                </div>
+                            @endif
+                        @endif
                     @endif
                 </div>
                 <div class="col-12 col-md-12 post-blck">

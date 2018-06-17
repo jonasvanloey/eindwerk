@@ -511,8 +511,14 @@
 
                                                             <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
 
-                                                                Dag {{$user->name}},&nbsp;<br>We vinden het fantastisch dat je besloten hebt om jouw toekomst met een voorsprong te starten en willen jouw uiteraard helpen met het vinden van de studentenjob waar je al die jaren al naar op zoek bent.&nbsp;<br>
+                                                                Dag {{$user->name}},
+                                                                @if($user->hasRole('student'))
+                                                                    &nbsp;<br>We vinden het fantastisch dat je besloten hebt om jouw toekomst met een voorsprong te starten en willen jouw uiteraard helpen met het vinden van de studentenjob waar je al die jaren al naar op zoek bent.&nbsp;<br>
                                                                 Vul daarom nog snel jouw profiel aan met een wat informatie over jezelf om potentiële werkgevers te overtuigen om voor jou te kiezen.
+                                                                    @else
+                                                                    &nbsp;<br>We vinden het fantastisch dat je besloten hebt om studenten te helpen om hun toekomst met een voorsprong te starten en willen jouw uiteraard helpen met het vinden van de studenten waar je al die jaren al naar op zoek bent.&nbsp;<br>
+                                                                    Vul daarom nog snel jouw profiel aan met een wat informatie over jezelf om potentiële studenten te overtuigen om voor jou te kiezen.
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                         </tbody></table>
@@ -535,7 +541,11 @@
                                                         <tbody>
                                                         <tr>
                                                             <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial; font-size: 16px; padding: 15px;">
+                                                                @if($user->hasRole('student'))
                                                                 <a class="mcnButton " title="Buy Now" href="{{route('profile.show',$user->student->id)}}" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">Vul jouw profiel aan</a>
+                                                                @else
+                                                                    <a class="mcnButton " title="Buy Now" href="{{route('company.show',$user->companies[0]->id)}}" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">Vul jouw profiel aan</a>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                         </tbody>

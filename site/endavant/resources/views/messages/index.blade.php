@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-12 col-md-2 text-center d-flex align-items-center justify-content-center ">
                                     {{ Form::open(['method' => 'DELETE', 'route' => ['deletemessage', $group->id]]) }}
-                                    {{ Form::submit('delete', ['class' => 'btn btn-danger']) }}
+                                    {{ Form::submit('delete', ['class' => 'btn btn-red']) }}
                                     {{ Form::close() }}</div>
                             </div>
 

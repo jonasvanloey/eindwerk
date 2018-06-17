@@ -106,6 +106,7 @@ class RegisterController extends Controller
             $stud->description = null;
             $stud->user_id = $user->id;
             $stud->save();
+
         } else {
             $adress2 = $data['company']['adress'].' '.$data['company']['zip_code'].' '.$data['company']['city'];
             $afterGeo2=Geocoder::getCoordinatesForAddress($adress2);
@@ -126,6 +127,7 @@ class RegisterController extends Controller
 
         }
         Queue::push(new SendUserRegistered($user));
+
 
 
         return $user;

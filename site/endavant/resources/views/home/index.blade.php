@@ -21,9 +21,9 @@
                                 <p>Als student multimedia is het vaak moeilijk om een studentenjob te vinden in de
                                     sector
                                     waarin je studeert. Endavant is een laagdrempelig platform waar jij op zoek kan gaan
-                                    naar projecten die een meeraarde bieden voor jouw CV en jouw kunnen lanceren voor
+                                    naar projecten die een meerwaarde bieden voor jouw CV en je kunnen lanceren voor
                                     een
-                                    prachtige carriere in de wereld van de multimedia.</p>
+                                    prachtige carrière in de wereld van de multimedia.</p>
                             </div>
                             <div class="btnr ">
                                 <a href="{{Auth::check()? url('/jobs') : route('register')}}" class="btn big "> Ik ben student</a>
@@ -42,8 +42,7 @@
                                     worden
                                     behandeld als volwaardige klant. Waarom uw project dan niet laten maken door een
                                     student
-                                    die u wel zijn volle aandacht geeft en ook nog eens een waardevolle werkervaring op
-                                    doet
+                                    die u wel zijn volle aandacht geeft en ook nog eens een waardevolle werkervaring opdoet
                                     door uw project uit te werken tot een kwaliteitsvol en vernieuwend eindproduct.</p>
                             </div>
                             <div class=" btnr">

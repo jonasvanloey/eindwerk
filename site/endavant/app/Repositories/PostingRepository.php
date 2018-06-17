@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\company;
 use App\favorite;
 use App\posting;
-use App\student;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Geocoder\Facades\Geocoder;
 use Torann\LaravelRepository\Repositories\AbstractRepository;
